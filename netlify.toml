@@ -1,0 +1,58 @@
+# Tradiesignal :: Netlify configuration
+# ------------------------------------------------------------------
+# Save this file as `netlify.toml` in the ROOT of your GitHub repo —
+# the same level as the `tradiesignal-site/` folder, not inside it.
+#
+# Repo layout this expects:
+#   netlify.toml            <- this file
+#   tradiesignal-site/
+#     index.html
+#     sample-report/index.html
+#     demo/index.html
+#     robots.txt
+#     sitemap.xml
+#     Tradiesignal-Hunter-Report.pdf
+# ------------------------------------------------------------------
+
+[build]
+  publish = "tradiesignal-site"
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=()"
+
+# The dashboard demo embeds ~1MB of project data and is regenerated
+# with each weekly deploy, so don't let browsers hold a stale copy.
+[[headers]]
+  for = "/demo/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Short URLs worth having on business cards and in emails.
+[[redirects]]
+  from = "/report"
+  to = "/sample-report/"
+  status = 301
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/demo/"
+  status = 301
+
+[[redirects]]
+  from = "/pricing"
+  to = "/#pricing"
+  status = 301
+
+# Force the apex domain as canonical so www doesn't split your SEO.
+# Netlify serves both; this makes www redirect to the bare domain.
+[[redirects]]
+  from = "https://www.tradiesignal.com/*"
+  to = "https://tradiesignal.com/:splat"
+  status = 301
+  force = true
