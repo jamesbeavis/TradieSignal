@@ -5,9 +5,13 @@
 # commits the result. Netlify is watching this branch, so the commit is the
 # deploy — nothing else to trigger.
 #
-# This is the job that removes the "I have to be home on Sunday night"
-# dependency. It is also the job that will quietly rot if nobody watches it,
-# so it fails loudly rather than publishing an empty site.
+# Design rules, learned the hard way:
+#   * The DATA refresh is the critical path. The PDF is a nice-to-have and
+#     must never be able to block it.
+#   * Never download a browser in CI. GitHub's ubuntu-24.04 image already
+#     ships Google Chrome; installing our own was the fragile step.
+#   * A failure must say which step failed, in the issue it opens, so nobody
+#     has to go digging through logs to find out.
 #
 # Manual run: Actions tab -> Weekly data refresh -> Run workflow.
 # =====================================================================
@@ -17,9 +21,6 @@ name: Weekly data refresh
 on:
   schedule:
     # 18:00 UTC Sunday = 04:00 Monday AEST (05:00 during AEDT).
-    # Lands well before the 6am digest and before anyone opens the site.
-    # Want it daily instead? Use '0 18 * * *' — see docs/08-auto-refresh.md
-    # for the trade-off on repository size.
     - cron: '0 18 * * 0'
   workflow_dispatch:
     inputs:
@@ -33,7 +34,6 @@ on:
         required: false
         default: false
 
-# Only one refresh at a time. Two concurrent runs would race on the commit.
 concurrency:
   group: data-refresh
   cancel-in-progress: false
@@ -43,38 +43,39 @@ permissions:
 
 jobs:
   refresh:
-    runs-on: ubuntu-latest
+    # Pinned rather than ubuntu-latest: that label moves to Ubuntu 26 on
+    # 19 October 2026. A surprise OS upgrade is exactly the kind of change that
+    # breaks a weekly job nobody is watching. Move this deliberately.
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
 
     steps:
       - name: Check out
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+        with:
+          # The final step pushes back to this repo using these credentials.
+          # Stated explicitly so a future default change can't break the push.
+          persist-credentials: true
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
 
-      # Chromium is only needed for the PDF. Cached so most runs skip the
-      # download entirely.
-      - name: Cache Playwright browsers
+      # Only the Playwright LIBRARY — no browser download. The PDF step uses
+      # the Google Chrome that GitHub's runner image already has installed.
+      - name: Install PDF library
         if: ${{ !inputs.skip_pdf }}
-        id: pw-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-chromium-v1
-
-      - name: Install Playwright
-        if: ${{ !inputs.skip_pdf }}
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
         run: |
-          npm install playwright --no-save --silent
-          npx playwright install --with-deps chromium
+          npm install playwright --no-save --no-audit --no-fund
+          echo "Chrome on this runner: $(google-chrome --version 2>/dev/null || echo 'NOT FOUND')"
 
       # -----------------------------------------------------------------
       # 1. Collect
@@ -104,9 +105,9 @@ jobs:
           counts = m.get("counts", {})
           print(json.dumps(counts, indent=2))
 
-          # Floors are deliberately well below a normal fortnight (~2,000 DAs,
-          # ~1,300 CDCs, ~1,450 CCs over 120 days) so ordinary variation never
-          # trips them, but a broken feed always does.
+          # Floors sit far below a normal run (~2,000 DAs, ~1,300 CDCs, ~1,450
+          # CCs over 120 days) so ordinary variation never trips them, but a
+          # broken feed always does.
           FLOORS = {"OnlineDA": 300, "OnlineCDC": 150, "OnlineCC": 150}
           problems = [
               f"{svc}: {counts.get(svc, 0)} records (expected at least {floor})"
@@ -129,6 +130,7 @@ jobs:
       # 2. Score and build
       # -----------------------------------------------------------------
       - name: Score and normalise
+        id: score
         env:
           PYTHONPATH: src
         run: python3 src/normalise_and_score.py
@@ -138,7 +140,7 @@ jobs:
           PYTHONPATH: src
         run: python3 src/report_data.py
 
-      - name: Render report, pages and site
+      - name: Render report, pages and dashboard
         env:
           PYTHONPATH: src
         run: |
@@ -148,8 +150,13 @@ jobs:
             --data-url /data/dashboard.json \
             --data-file site/dashboard-data.json
 
+      # continue-on-error: if the PDF can't be produced, the site still
+      # refreshes and keeps last week's PDF. A PDF problem must never cost you
+      # a week of fresh data.
       - name: Export PDF
+        id: pdf
         if: ${{ !inputs.skip_pdf }}
+        continue-on-error: true
         run: node src/export_pdf.cjs
 
       - name: Assemble the deployable site
@@ -203,11 +210,8 @@ jobs:
           git config user.name  "tradiesignal-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          # data/raw/ is gitignored: it is ~7MB of API snapshots that
-          # regenerate in four minutes, and versioning it bloats the repo
-          # for no benefit.
           git add deploy data/projects.csv data/summary.json data/report_payload.json \
-                  site reports/report_web.html reports/report_print.html || true
+                  reports/report_web.html reports/report_print.html || true
           if [ -f reports/Tradiesignal_Hunter_Report.pdf ]; then
             git add reports/Tradiesignal_Hunter_Report.pdf
           fi
@@ -216,9 +220,6 @@ jobs:
             echo "No changes — nothing lodged with the councils since the last run."
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
-            # Heredoc rather than python3 -c: nesting quotes and a literal
-            # dollar sign through bash inside YAML is a reliable way to ship
-            # a backslash into your own commit messages.
             python3 > /tmp/summary.txt <<'PY'
           import json
           s = json.load(open("data/summary.json"))
@@ -230,62 +231,107 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
+      # Runs even on failure, and says plainly whether THIS run produced fresh
+      # data. The first version printed the numbers from whatever summary.json
+      # was already in the repo, which made a failed run look like it had
+      # worked.
       - name: Summary
         if: always()
+        env:
+          SCORE_OUTCOME: ${{ steps.score.outcome }}
+          PDF_OUTCOME: ${{ steps.pdf.outcome }}
+          CHANGED: ${{ steps.commit.outputs.changed }}
         run: |
-          {
-            echo "### Tradiesignal data refresh"
-            echo ""
-            if [ -f data/summary.json ]; then
-              python3 - <<'PY'
-          import json
-          s = json.load(open("data/summary.json"))
+          python3 - >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json, os
+          from pathlib import Path
+
+          score = os.environ.get("SCORE_OUTCOME", "")
+          pdf = os.environ.get("PDF_OUTCOME", "")
+          changed = os.environ.get("CHANGED", "")
+
+          print("### Tradiesignal data refresh\n")
+
+          if score != "success":
+              print("> **No fresh data this run.** The pipeline stopped before scoring, "
+                    "so **the live site is unchanged** and still shows the last good data.")
+              print(">")
+              print("> Open the **refresh** job above and look for the step with the red ✗ "
+                    "— that is where it stopped.")
+              raise SystemExit
+
+          s = json.loads(Path("data/summary.json").read_text())
           q = s["quality"]["cost_confidence"]
+          status = ("✅ Published — Netlify is deploying now." if changed == "true"
+                    else "✅ Nothing new since last run — no deploy needed.")
+          print(f"{status}\n")
           print(f"- **Generated:** {s['generated']}")
           print(f"- **Projects tracked:** {s['projects_live']:,}")
           print(f"- **Verified construction value:** ${s['construction_value_verified']/1e9:.2f}bn")
           print(f"- **High priority:** {s['by_priority'].get('high', 0)}")
           print(f"- **Flagged as suspect/unverified:** {q.get('suspect',0) + q.get('unverified',0)}")
-          print("")
-          print("**Most active builders**")
+          if pdf == "failure":
+              print("- ⚠️ **PDF not regenerated** — the site kept last week's PDF. "
+                    "Everything else refreshed normally.")
+          elif pdf == "skipped":
+              print("- PDF skipped on request.")
+          print("\n**Most active builders**")
           for b in s["top_builders"][:5]:
               print(f"- {b['builder']} — {b['jobs']} jobs, ${b['value']:,}")
           PY
-            else
-              echo "Build did not reach the summary stage."
-            fi
-          } >> "$GITHUB_STEP_SUMMARY"
 
   # A failed refresh is invisible unless something shouts. This opens an issue
-  # so it lands in your notifications rather than only in the Actions tab.
+  # that names the exact step that failed, so it lands in your notifications
+  # with the answer already in it.
   alert-on-failure:
     needs: refresh
     if: failure()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       issues: write
+      actions: read
     steps:
       - name: Open an issue
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
+            // Find which step actually failed, so the issue says so directly.
+            const jobs = await github.rest.actions.listJobsForWorkflowRun({
+              owner: context.repo.owner, repo: context.repo.repo, run_id: context.runId,
+            });
+            const failed = [];
+            for (const job of jobs.data.jobs) {
+              for (const step of job.steps || []) {
+                if (step.conclusion === 'failure') failed.push(step.name);
+              }
+            }
+            const where = failed.length ? failed.map(s => `**${s}**`).join(', ') : 'unknown';
+
+            const hints = {
+              'Collect NSW ePlanning data':
+                'The NSW API was unreachable or returned an error. Usually temporary — re-run in an hour.',
+              'Guard against a silent empty collection':
+                'The API returned too few records, so publishing was refused (the safety check working). ' +
+                'Usually a brief outage. If it persists, a council name may no longer match the API list.',
+              'Score and normalise':
+                'A field the scorer depends on has probably changed shape in the NSW data.',
+              'Commit and push':
+                'Check Settings → Actions → General → Workflow permissions is set to "Read and write".',
+              'Sanity-check the build':
+                'A page or the dashboard data came out empty or truncated, so it was not published.',
+            };
+            const advice = failed.map(s => hints[s]).filter(Boolean).join('\n\n') ||
+              'Open the run and read the log for the failed step.';
+
             const title = `Data refresh failed — ${new Date().toISOString().slice(0,10)}`;
             const body = [
-              'The weekly Tradiesignal data refresh failed, so **the site is still showing last week\'s data**.',
+              'The weekly Tradiesignal data refresh failed. **The live site is unchanged** and still shows the last good data.',
+              '',
+              `**Failed at:** ${where}`,
+              '',
+              advice,
               '',
               `[View the run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
-              '',
-              'Most likely causes, in order:',
-              '1. A council name no longer matches the ePlanning API\'s Appendix 1 list (returns HTTP 200 with zero records).',
-              '2. The `api.apps1.nsw.gov.au` endpoint moved or is down.',
-              '3. A field the scorer depends on changed shape.',
-              '',
-              'Check by hand:',
-              '```bash',
-              'curl -s "https://api.apps1.nsw.gov.au/eplanning/data/v0/OnlineCC" \\',
-              '  -H "PageSize: 1" -H "PageNumber: 1" \\',
-              '  -H \'filters: {"filters":{"CouncilName":["Newcastle City Council"]}}\' | head -c 400',
-              '```',
             ].join('\n');
 
             // Reuse an open issue rather than stacking one up per week.
