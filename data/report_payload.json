@@ -1,22 +1,22 @@
 {
- "generated": "2026-09-20",
+ "generated": "2026-09-21",
  "issue": 1,
  "totals": {
   "window_days": 14,
-  "window_from": "2026-09-06",
-  "window_to": "2026-09-20",
+  "window_from": "2026-09-07",
+  "window_to": "2026-09-21",
   "tracked_total": 3864,
-  "recent_count": 1101,
+  "recent_count": 1100,
   "recent_high": 5,
   "recent_medium": 16,
-  "recent_value": 849625144,
-  "recent_elec_low": 62561982,
-  "recent_elec_high": 107785793,
+  "recent_value": 849537144,
+  "recent_elec_low": 62554062,
+  "recent_elec_high": 107772593,
   "builders_named": 129,
   "public_pipeline_value": 6422300000
  },
  "summary": {
-  "generated": "2026-09-20",
+  "generated": "2026-09-21",
   "projects_total": 3903,
   "projects_live": 3864,
   "withdrawn": 39,
@@ -722,7 +722,7 @@
    "lat": -32.928701832,
    "lon": 151.765989841,
    "lot_ref": "2/DP1301874",
-   "days_since_activity": 11,
+   "days_since_activity": 12,
    "cost_all_declared": [
     80300000.0
    ],
@@ -808,7 +808,7 @@
    "project_name": "Mixed use development (280 dwellings), Newcastle West",
    "id": "TS-NEWC-1024947",
    "slug": "newcastle-west-mixed-use-development-280-dwellings-newcastle-west",
-   "age_days": 11,
+   "age_days": 12,
    "corroboration": null
   },
   {
@@ -858,7 +858,7 @@
    "lat": -32.925921189,
    "lon": 151.777805169,
    "lot_ref": "1/DP747803",
-   "days_since_activity": 9,
+   "days_since_activity": 10,
    "cost_all_declared": [
     39000000.0,
     15000.0
@@ -946,7 +946,7 @@
    "project_name": "Residential flat building (20 dwellings), Newcastle",
    "id": "TS-NEWC-1026088",
    "slug": "newcastle-residential-flat-building-20-dwellings-newcastle",
-   "age_days": 8,
+   "age_days": 9,
    "corroboration": null
   },
   {
@@ -995,7 +995,7 @@
    "lat": -32.950728587,
    "lon": 151.625288658,
    "lot_ref": null,
-   "days_since_activity": 12,
+   "days_since_activity": 13,
    "cost_all_declared": [
     3294500.0
    ],
@@ -1067,7 +1067,7 @@
    "project_name": "Centre-based child care, Boolaroo",
    "id": "TS-LAKE-1018137",
    "slug": "boolaroo-centre-based-child-care-boolaroo",
-   "age_days": 12,
+   "age_days": 13,
    "corroboration": null
   },
   {
@@ -1116,7 +1116,7 @@
    "lat": -32.720775626,
    "lon": 152.145932413,
    "lot_ref": null,
-   "days_since_activity": 11,
+   "days_since_activity": 12,
    "cost_all_declared": [
     5453572.3
    ],
@@ -1189,7 +1189,7 @@
    "project_name": "Residential flat building, Nelson Bay",
    "id": "TS-PORT-1025955",
    "slug": "nelson-bay-residential-flat-building-nelson-bay",
-   "age_days": 11,
+   "age_days": 12,
    "corroboration": null
   },
   {
@@ -1239,7 +1239,7 @@
    "lat": -32.906735859,
    "lon": 151.756725974,
    "lot_ref": null,
-   "days_since_activity": 3,
+   "days_since_activity": 4,
    "cost_all_declared": [
     1602306.0
    ],
@@ -1309,7 +1309,7 @@
    "project_name": "Light industry, Tighes Hill",
    "id": "TS-NEWC-1031680",
    "slug": "tighes-hill-light-industry-tighes-hill",
-   "age_days": 3,
+   "age_days": 4,
    "corroboration": null
   },
   {
@@ -1357,7 +1357,7 @@
    "lat": -33.103048533,
    "lon": 151.478335267,
    "lot_ref": null,
-   "days_since_activity": 11,
+   "days_since_activity": 12,
    "cost_all_declared": [
     2750000.0
    ],
@@ -1428,7 +1428,7 @@
    "project_name": "Centre-based child care, Morisset",
    "id": "TS-LAKE-1026394",
    "slug": "morisset-centre-based-child-care-morisset",
-   "age_days": 11,
+   "age_days": 12,
    "corroboration": null
   },
   {
@@ -1475,7 +1475,7 @@
    "lat": -32.816766099,
    "lon": 151.706646312,
    "lot_ref": null,
-   "days_since_activity": 3,
+   "days_since_activity": 4,
    "cost_all_declared": [
     997601.0
    ],
@@ -1546,7 +1546,7 @@
    "project_name": "General industry, Tomago",
    "id": "TS-PORT-1026061",
    "slug": "tomago-general-industry-tomago",
-   "age_days": 3,
+   "age_days": 4,
    "corroboration": null
   },
   {
@@ -1601,7 +1601,7 @@
    "lat": -32.704107889,
    "lon": 151.506674496,
    "lot_ref": null,
-   "days_since_activity": 13,
+   "days_since_activity": 14,
    "cost_all_declared": [
     8072017.73,
     8072017.73,
@@ -1696,7 +1696,7 @@
    "project_name": "Office Premise, Rutherford",
    "id": "TS-MAIT-380220",
    "slug": "rutherford-office-premise-rutherford",
-   "age_days": 11,
+   "age_days": 12,
    "corroboration": null
   },
   {
@@ -1744,7 +1744,7 @@
    "lat": -33.142639937,
    "lon": 151.41968767,
    "lot_ref": null,
-   "days_since_activity": 2,
+   "days_since_activity": 3,
    "cost_all_declared": [
     631749.0
    ],
@@ -1812,7 +1812,7 @@
    "project_name": "Demolition, Mandalong",
    "id": "TS-LAKE-1029882",
    "slug": "mandalong-demolition-mandalong",
-   "age_days": 2,
+   "age_days": 3,
    "corroboration": null
   },
   {
@@ -1859,7 +1859,7 @@
    "lat": -32.982094091,
    "lon": 151.65567997,
    "lot_ref": null,
-   "days_since_activity": 13,
+   "days_since_activity": 14,
    "cost_all_declared": [
     2000000.0
    ],
@@ -1930,7 +1930,7 @@
    "project_name": "Dwelling house, Warners Bay",
    "id": "TS-LAKE-1005641",
    "slug": "warners-bay-dwelling-house-warners-bay",
-   "age_days": 13,
+   "age_days": 14,
    "corroboration": null
   },
   {
@@ -1980,7 +1980,7 @@
    "lat": -32.940072399,
    "lon": 151.659813419,
    "lot_ref": null,
-   "days_since_activity": 4,
+   "days_since_activity": 5,
    "cost_all_declared": [
     548350.0
    ],
@@ -2052,7 +2052,7 @@
    "project_name": "Alterations or additions to an existing building or structure, Cardiff",
    "id": "TS-LAKE-1030565",
    "slug": "cardiff-alterations-or-additions-to-an-existing-building-or-structure-cardiff",
-   "age_days": 4,
+   "age_days": 5,
    "corroboration": null
   },
   {
@@ -2100,7 +2100,7 @@
    "lat": -32.940513805,
    "lon": 151.717648028,
    "lot_ref": null,
-   "days_since_activity": 2,
+   "days_since_activity": 3,
    "cost_all_declared": [
     380600.0
    ],
@@ -2171,7 +2171,7 @@
    "project_name": "Alterations or additions to an existing building or structure, Adamstown",
    "id": "TS-NEWC-1031996",
    "slug": "adamstown-alterations-or-additions-to-an-existing-building-or-structure-adamstow",
-   "age_days": 1,
+   "age_days": 2,
    "corroboration": null
   }
  ],
@@ -2220,7 +2220,7 @@
    "lat": -32.898217558,
    "lon": 151.692182442,
    "lot_ref": "1/DP1295741",
-   "days_since_activity": 6,
+   "days_since_activity": 7,
    "cost_all_declared": [
     2638897.08
    ],
@@ -2292,7 +2292,7 @@
    "project_name": "Demolition (24 dwellings), Jesmond",
    "id": "TS-NEWC-656996",
    "slug": "jesmond-demolition-24-dwellings-jesmond",
-   "age_days": 3,
+   "age_days": 4,
    "corroboration": null
   },
   {
@@ -2336,7 +2336,7 @@
    "lat": -32.990309369,
    "lon": 151.701342907,
    "lot_ref": null,
-   "days_since_activity": 108,
+   "days_since_activity": 109,
    "cost_all_declared": [
     14794316.49
    ],
@@ -2404,7 +2404,7 @@
    "project_name": "Industrial development, Gateshead",
    "id": "TS-LAKE-363603",
    "slug": "gateshead-industrial-development-gateshead",
-   "age_days": 2,
+   "age_days": 3,
    "corroboration": null
   },
   {
@@ -2450,7 +2450,7 @@
    "lat": -32.78875301,
    "lon": 151.632484346,
    "lot_ref": "101/DP873751",
-   "days_since_activity": 11,
+   "days_since_activity": 12,
    "cost_all_declared": [
     2984505.0
    ],
@@ -2518,7 +2518,7 @@
    "project_name": "Warehouse or distribution centre, Thornton",
    "id": "TS-MAIT-671711",
    "slug": "thornton-warehouse-or-distribution-centre-thornton",
-   "age_days": 10,
+   "age_days": 11,
    "corroboration": null
   },
   {
@@ -2565,7 +2565,7 @@
    "lat": -32.927085761,
    "lon": 151.761451587,
    "lot_ref": null,
-   "days_since_activity": 6,
+   "days_since_activity": 7,
    "cost_all_declared": [
     750000.0
    ],
@@ -2637,7 +2637,7 @@
    "project_name": "Commercial development, Newcastle West",
    "id": "TS-NEWC-377995",
    "slug": "newcastle-west-commercial-development-newcastle-west",
-   "age_days": 5,
+   "age_days": 6,
    "corroboration": null
   },
   {
@@ -2683,7 +2683,7 @@
    "lat": -32.919323542,
    "lon": 151.748194782,
    "lot_ref": "1/DP1310549",
-   "days_since_activity": 4,
+   "days_since_activity": 5,
    "cost_all_declared": [
     5193937.0
    ],
@@ -2755,7 +2755,7 @@
    "project_name": "Shop (27 dwellings), Hamilton",
    "id": "TS-NEWC-673993",
    "slug": "hamilton-shop-27-dwellings-hamilton",
-   "age_days": 3,
+   "age_days": 4,
    "corroboration": null
   },
   {
@@ -2802,7 +2802,7 @@
    "lat": -32.819086904,
    "lon": 151.484139946,
    "lot_ref": null,
-   "days_since_activity": 18,
+   "days_since_activity": 19,
    "cost_all_declared": [
     2210862.0
    ],
@@ -2871,7 +2871,7 @@
    "project_name": "Centre-based child care, Kurri Kurri",
    "id": "TS-CESS-660397",
    "slug": "kurri-kurri-centre-based-child-care-kurri-kurri",
-   "age_days": 5,
+   "age_days": 6,
    "corroboration": null
   },
   {
@@ -2918,7 +2918,7 @@
    "lat": -32.974138181,
    "lon": 151.644519072,
    "lot_ref": null,
-   "days_since_activity": 5,
+   "days_since_activity": 6,
    "cost_all_declared": [
     1000000.0
    ],
@@ -2989,7 +2989,7 @@
    "project_name": "Restaurant or cafe, Warners Bay",
    "id": "TS-LAKE-383956",
    "slug": "warners-bay-restaurant-or-cafe-warners-bay",
-   "age_days": 2,
+   "age_days": 3,
    "corroboration": null
   },
   {
@@ -3037,7 +3037,7 @@
    "lat": -33.10024235,
    "lon": 151.639794502,
    "lot_ref": null,
-   "days_since_activity": 6,
+   "days_since_activity": 7,
    "cost_all_declared": [
     650000.0
    ],
@@ -3106,7 +3106,7 @@
    "project_name": "Erection of a new structure, Caves Beach",
    "id": "TS-LAKE-980224",
    "slug": "caves-beach-erection-of-a-new-structure-caves-beach",
-   "age_days": 1,
+   "age_days": 2,
    "corroboration": null
   },
   {
@@ -3155,7 +3155,7 @@
    "lat": -32.761035072,
    "lon": 151.744064405,
    "lot_ref": null,
-   "days_since_activity": 4,
+   "days_since_activity": 5,
    "cost_all_declared": [
     568700.0,
     568700.0,
@@ -3250,7 +3250,7 @@
    "project_name": "Office Premise, Raymond Terrace",
    "id": "TS-PORT-384126",
    "slug": "raymond-terrace-office-premise-raymond-terrace",
-   "age_days": 3,
+   "age_days": 4,
    "corroboration": null
   }
  ],
@@ -3304,7 +3304,7 @@
    "lat": -32.83841327,
    "lon": 151.348818448,
    "lot_ref": "51/DP1128812",
-   "days_since_activity": 12,
+   "days_since_activity": 13,
    "cost_all_declared": [
     97757765.0
    ],
@@ -3377,7 +3377,7 @@
    "project_name": "Seniors housing (141 dwellings), Cessnock",
    "id": "TS-CESS-669242",
    "slug": "cessnock-seniors-housing-141-dwellings-cessnock",
-   "age_days": 3,
+   "age_days": 4,
    "corroboration": null
   },
   {
@@ -3425,7 +3425,7 @@
    "lat": -32.771420045,
    "lon": 151.57040457,
    "lot_ref": null,
-   "days_since_activity": 93,
+   "days_since_activity": 94,
    "cost_all_declared": [
     21850000.0
    ],
@@ -3491,7 +3491,7 @@
    "project_name": "Erection of a new structure, Maitland LGA",
    "id": "TS-MAIT-645939",
    "slug": "address-not-supplied-erection-of-a-new-structure-maitland-lga",
-   "age_days": 9,
+   "age_days": 10,
    "corroboration": null
   },
   {
@@ -3535,7 +3535,7 @@
    "lat": -32.754963994,
    "lon": 151.642958094,
    "lot_ref": "32/DP778111",
-   "days_since_activity": 2,
+   "days_since_activity": 3,
    "cost_all_declared": [
     21923066.0
    ],
@@ -3603,7 +3603,7 @@
    "project_name": "264-lot subdivision, Chisholm",
    "id": "TS-MAIT-675025",
    "slug": "chisholm-264-lot-subdivision-chisholm",
-   "age_days": 2,
+   "age_days": 3,
    "corroboration": null
   },
   {
@@ -3650,7 +3650,7 @@
    "lat": -33.015005528,
    "lon": 151.593897418,
    "lot_ref": "4/DP2505",
-   "days_since_activity": 5,
+   "days_since_activity": 6,
    "cost_all_declared": [
     4035768.0
    ],
@@ -3720,7 +3720,7 @@
    "project_name": "Centre-based child care, Toronto",
    "id": "TS-LAKE-671469",
    "slug": "toronto-centre-based-child-care-toronto",
-   "age_days": 4,
+   "age_days": 5,
    "corroboration": null
   },
   {
@@ -3768,7 +3768,7 @@
    "lat": -32.979443437,
    "lon": 151.674902713,
    "lot_ref": "100/DP1152318",
-   "days_since_activity": 6,
+   "days_since_activity": 7,
    "cost_all_declared": [
     11500319.0
    ],
@@ -3841,7 +3841,7 @@
    "project_name": "Multi-dwelling housing (21 dwellings), Mount Hutton",
    "id": "TS-LAKE-670959",
    "slug": "mount-hutton-multi-dwelling-housing-21-dwellings-mount-hutton",
-   "age_days": 6,
+   "age_days": 7,
    "corroboration": null
   },
   {
@@ -3885,7 +3885,7 @@
    "lat": -32.881445644,
    "lon": 151.255981934,
    "lot_ref": "44/DP843879",
-   "days_since_activity": 52,
+   "days_since_activity": 53,
    "cost_all_declared": [
     8838807.75
    ],
@@ -3953,7 +3953,7 @@
    "project_name": "177-lot subdivision, Millfield",
    "id": "TS-CESS-659966",
    "slug": "millfield-177-lot-subdivision-millfield",
-   "age_days": 4,
+   "age_days": 5,
    "corroboration": null
   },
   {
@@ -4000,7 +4000,7 @@
    "lat": -32.70399215,
    "lon": 151.498754255,
    "lot_ref": "813/DP1182211",
-   "days_since_activity": 6,
+   "days_since_activity": 7,
    "cost_all_declared": [
     4488900.0
    ],
@@ -4070,7 +4070,7 @@
    "project_name": "Light industry, Rutherford",
    "id": "TS-MAIT-674525",
    "slug": "rutherford-light-industry-rutherford",
-   "age_days": 5,
+   "age_days": 6,
    "corroboration": null
   },
   {
@@ -4115,7 +4115,7 @@
    "lat": -32.671916544,
    "lon": 151.355142276,
    "lot_ref": "495/DP1288145",
-   "days_since_activity": 48,
+   "days_since_activity": 49,
    "cost_all_declared": [
     12754712.3
    ],
@@ -4187,7 +4187,7 @@
    "project_name": "Independent living units (20 dwellings), North Rothbury",
    "id": "TS-CESS-659715",
    "slug": "north-rothbury-independent-living-units-20-dwellings-north-rothbury",
-   "age_days": 1,
+   "age_days": 2,
    "corroboration": null
   },
   {
@@ -4232,7 +4232,7 @@
    "lat": -32.790760434,
    "lon": 151.741007595,
    "lot_ref": "214/DP1306660",
-   "days_since_activity": 34,
+   "days_since_activity": 35,
    "cost_all_declared": [
     3190000.0
    ],
@@ -4300,7 +4300,7 @@
    "project_name": "Warehouse or distribution centre, Heatherbrae",
    "id": "TS-PORT-665799",
    "slug": "heatherbrae-warehouse-or-distribution-centre-heatherbrae",
-   "age_days": 10,
+   "age_days": 11,
    "corroboration": null
   },
   {
@@ -4345,7 +4345,7 @@
    "lat": -32.790078589,
    "lon": 151.739489292,
    "lot_ref": "225/DP1306660",
-   "days_since_activity": 38,
+   "days_since_activity": 39,
    "cost_all_declared": [
     14968533.15
    ],
@@ -4413,7 +4413,7 @@
    "project_name": "General industry, Heatherbrae",
    "id": "TS-PORT-664531",
    "slug": "heatherbrae-general-industry-heatherbrae",
-   "age_days": 2,
+   "age_days": 3,
    "corroboration": null
   }
  ],
@@ -4470,7 +4470,7 @@
     "lat": -32.928701832,
     "lon": 151.765989841,
     "lot_ref": "2/DP1301874",
-    "days_since_activity": 11,
+    "days_since_activity": 12,
     "cost_all_declared": [
      80300000.0
     ],
@@ -4556,7 +4556,7 @@
     "project_name": "Mixed use development (280 dwellings), Newcastle West",
     "id": "TS-NEWC-1024947",
     "slug": "newcastle-west-mixed-use-development-280-dwellings-newcastle-west",
-    "age_days": 11,
+    "age_days": 12,
     "corroboration": null
    },
    {
@@ -4611,7 +4611,7 @@
     "lat": -32.704107889,
     "lon": 151.506674496,
     "lot_ref": null,
-    "days_since_activity": 13,
+    "days_since_activity": 14,
     "cost_all_declared": [
      8072017.73,
      8072017.73,
@@ -4706,7 +4706,7 @@
     "project_name": "Office Premise, Rutherford",
     "id": "TS-MAIT-380220",
     "slug": "rutherford-office-premise-rutherford",
-    "age_days": 11,
+    "age_days": 12,
     "corroboration": null
    },
    {
@@ -4753,7 +4753,7 @@
     "lat": -32.898217558,
     "lon": 151.692182442,
     "lot_ref": "1/DP1295741",
-    "days_since_activity": 6,
+    "days_since_activity": 7,
     "cost_all_declared": [
      2638897.08
     ],
@@ -4825,7 +4825,7 @@
     "project_name": "Demolition (24 dwellings), Jesmond",
     "id": "TS-NEWC-656996",
     "slug": "jesmond-demolition-24-dwellings-jesmond",
-    "age_days": 3,
+    "age_days": 4,
     "corroboration": null
    },
    {
@@ -4875,7 +4875,7 @@
     "lat": -32.940072399,
     "lon": 151.659813419,
     "lot_ref": null,
-    "days_since_activity": 4,
+    "days_since_activity": 5,
     "cost_all_declared": [
      548350.0
     ],
@@ -4947,7 +4947,7 @@
     "project_name": "Alterations or additions to an existing building or structure, Cardiff",
     "id": "TS-LAKE-1030565",
     "slug": "cardiff-alterations-or-additions-to-an-existing-building-or-structure-cardiff",
-    "age_days": 4,
+    "age_days": 5,
     "corroboration": null
    },
    {
@@ -4994,7 +4994,7 @@
     "lat": -32.927085761,
     "lon": 151.761451587,
     "lot_ref": null,
-    "days_since_activity": 6,
+    "days_since_activity": 7,
     "cost_all_declared": [
      750000.0
     ],
@@ -5066,7 +5066,7 @@
     "project_name": "Commercial development, Newcastle West",
     "id": "TS-NEWC-377995",
     "slug": "newcastle-west-commercial-development-newcastle-west",
-    "age_days": 5,
+    "age_days": 6,
     "corroboration": null
    },
    {
@@ -5112,7 +5112,7 @@
     "lat": -32.919323542,
     "lon": 151.748194782,
     "lot_ref": "1/DP1310549",
-    "days_since_activity": 4,
+    "days_since_activity": 5,
     "cost_all_declared": [
      5193937.0
     ],
@@ -5184,7 +5184,7 @@
     "project_name": "Shop (27 dwellings), Hamilton",
     "id": "TS-NEWC-673993",
     "slug": "hamilton-shop-27-dwellings-hamilton",
-    "age_days": 3,
+    "age_days": 4,
     "corroboration": null
    },
    {
@@ -5231,7 +5231,7 @@
     "lat": -32.974138181,
     "lon": 151.644519072,
     "lot_ref": null,
-    "days_since_activity": 5,
+    "days_since_activity": 6,
     "cost_all_declared": [
      1000000.0
     ],
@@ -5302,7 +5302,7 @@
     "project_name": "Restaurant or cafe, Warners Bay",
     "id": "TS-LAKE-383956",
     "slug": "warners-bay-restaurant-or-cafe-warners-bay",
-    "age_days": 2,
+    "age_days": 3,
     "corroboration": null
    },
    {
@@ -5350,7 +5350,7 @@
     "lat": -33.10024235,
     "lon": 151.639794502,
     "lot_ref": null,
-    "days_since_activity": 6,
+    "days_since_activity": 7,
     "cost_all_declared": [
      650000.0
     ],
@@ -5419,7 +5419,7 @@
     "project_name": "Erection of a new structure, Caves Beach",
     "id": "TS-LAKE-980224",
     "slug": "caves-beach-erection-of-a-new-structure-caves-beach",
-    "age_days": 1,
+    "age_days": 2,
     "corroboration": null
    }
   ],
@@ -5471,7 +5471,7 @@
     "lat": -32.925921189,
     "lon": 151.777805169,
     "lot_ref": "1/DP747803",
-    "days_since_activity": 9,
+    "days_since_activity": 10,
     "cost_all_declared": [
      39000000.0,
      15000.0
@@ -5559,7 +5559,7 @@
     "project_name": "Residential flat building (20 dwellings), Newcastle",
     "id": "TS-NEWC-1026088",
     "slug": "newcastle-residential-flat-building-20-dwellings-newcastle",
-    "age_days": 8,
+    "age_days": 9,
     "corroboration": null
    },
    {
@@ -5608,7 +5608,7 @@
     "lat": -32.720775626,
     "lon": 152.145932413,
     "lot_ref": null,
-    "days_since_activity": 11,
+    "days_since_activity": 12,
     "cost_all_declared": [
      5453572.3
     ],
@@ -5681,7 +5681,7 @@
     "project_name": "Residential flat building, Nelson Bay",
     "id": "TS-PORT-1025955",
     "slug": "nelson-bay-residential-flat-building-nelson-bay",
-    "age_days": 11,
+    "age_days": 12,
     "corroboration": null
    },
    {
@@ -5728,7 +5728,7 @@
     "lat": -32.982094091,
     "lon": 151.65567997,
     "lot_ref": null,
-    "days_since_activity": 13,
+    "days_since_activity": 14,
     "cost_all_declared": [
      2000000.0
     ],
@@ -5799,7 +5799,7 @@
     "project_name": "Dwelling house, Warners Bay",
     "id": "TS-LAKE-1005641",
     "slug": "warners-bay-dwelling-house-warners-bay",
-    "age_days": 13,
+    "age_days": 14,
     "corroboration": null
    },
    {
@@ -5847,7 +5847,7 @@
     "lat": -32.906743531,
     "lon": 151.781127484,
     "lot_ref": null,
-    "days_since_activity": 13,
+    "days_since_activity": 14,
     "cost_all_declared": [
      950000.0
     ],
@@ -5918,7 +5918,7 @@
     "project_name": "Dwelling house, Stockton",
     "id": "TS-NEWC-998779",
     "slug": "stockton-dwelling-house-stockton",
-    "age_days": 13,
+    "age_days": 14,
     "corroboration": null
    },
    {
@@ -5965,7 +5965,7 @@
     "lat": -32.919143336,
     "lon": 151.765966297,
     "lot_ref": null,
-    "days_since_activity": 5,
+    "days_since_activity": 6,
     "cost_all_declared": [
      822525.17
     ],
@@ -6036,7 +6036,7 @@
     "project_name": "Dwelling house, Carrington",
     "id": "TS-NEWC-1013878",
     "slug": "carrington-dwelling-house-carrington",
-    "age_days": 5,
+    "age_days": 6,
     "corroboration": null
    },
    {
@@ -6091,7 +6091,7 @@
     "lat": -32.977628706,
     "lon": 151.700485442,
     "lot_ref": "11/DP1278675",
-    "days_since_activity": 24,
+    "days_since_activity": 25,
     "cost_all_declared": [
      629660.0,
      629660.0,
@@ -6211,7 +6211,7 @@
     "project_name": "Dwelling house, Charlestown",
     "id": "TS-LAKE-985453",
     "slug": "charlestown-dwelling-house-charlestown",
-    "age_days": 13,
+    "age_days": 14,
     "corroboration": null
    },
    {
@@ -6261,7 +6261,7 @@
     "lat": -32.952888091,
     "lon": 151.715503056,
     "lot_ref": null,
-    "days_since_activity": 4,
+    "days_since_activity": 5,
     "cost_all_declared": [
      500000.0
     ],
@@ -6332,7 +6332,7 @@
     "project_name": "Dwelling house, Adamstown Heights",
     "id": "TS-NEWC-1002056",
     "slug": "adamstown-heights-dwelling-house-adamstown-heights",
-    "age_days": 2,
+    "age_days": 3,
     "corroboration": null
    },
    {
@@ -6376,7 +6376,7 @@
     "lat": -32.819742601,
     "lon": 151.36889389,
     "lot_ref": null,
-    "days_since_activity": 12,
+    "days_since_activity": 13,
     "cost_all_declared": [
      2700000.0
     ],
@@ -6444,7 +6444,7 @@
     "project_name": "29-lot subdivision, Cessnock",
     "id": "TS-CESS-665690",
     "slug": "cessnock-29-lot-subdivision-cessnock",
-    "age_days": 11,
+    "age_days": 12,
     "corroboration": null
    }
   ],
@@ -6495,7 +6495,7 @@
     "lat": -32.950728587,
     "lon": 151.625288658,
     "lot_ref": null,
-    "days_since_activity": 12,
+    "days_since_activity": 13,
     "cost_all_declared": [
      3294500.0
     ],
@@ -6567,7 +6567,7 @@
     "project_name": "Centre-based child care, Boolaroo",
     "id": "TS-LAKE-1018137",
     "slug": "boolaroo-centre-based-child-care-boolaroo",
-    "age_days": 12,
+    "age_days": 13,
     "corroboration": null
    },
    {
@@ -6615,7 +6615,7 @@
     "lat": -33.103048533,
     "lon": 151.478335267,
     "lot_ref": null,
-    "days_since_activity": 11,
+    "days_since_activity": 12,
     "cost_all_declared": [
      2750000.0
     ],
@@ -6686,7 +6686,7 @@
     "project_name": "Centre-based child care, Morisset",
     "id": "TS-LAKE-1026394",
     "slug": "morisset-centre-based-child-care-morisset",
-    "age_days": 11,
+    "age_days": 12,
     "corroboration": null
    },
    {
@@ -6733,7 +6733,7 @@
     "lat": -32.819086904,
     "lon": 151.484139946,
     "lot_ref": null,
-    "days_since_activity": 18,
+    "days_since_activity": 19,
     "cost_all_declared": [
      2210862.0
     ],
@@ -6802,7 +6802,7 @@
     "project_name": "Centre-based child care, Kurri Kurri",
     "id": "TS-CESS-660397",
     "slug": "kurri-kurri-centre-based-child-care-kurri-kurri",
-    "age_days": 5,
+    "age_days": 6,
     "corroboration": null
    },
    {
@@ -6849,7 +6849,7 @@
     "lat": -33.015005528,
     "lon": 151.593897418,
     "lot_ref": "4/DP2505",
-    "days_since_activity": 5,
+    "days_since_activity": 6,
     "cost_all_declared": [
      4035768.0
     ],
@@ -6919,7 +6919,7 @@
     "project_name": "Centre-based child care, Toronto",
     "id": "TS-LAKE-671469",
     "slug": "toronto-centre-based-child-care-toronto",
-    "age_days": 4,
+    "age_days": 5,
     "corroboration": null
    },
    {
@@ -6965,7 +6965,7 @@
     "lat": -32.922981013,
     "lon": 151.724645706,
     "lot_ref": "2/DP1204369",
-    "days_since_activity": 6,
+    "days_since_activity": 7,
     "cost_all_declared": [
      1677500.0
     ],
@@ -7034,7 +7034,7 @@
     "project_name": "Alterations or additions to an existing building or structure, Broadmeadow",
     "id": "TS-NEWC-672992",
     "slug": "broadmeadow-alterations-or-additions-to-an-existing-building-or-structure-broadm",
-    "age_days": 4,
+    "age_days": 5,
     "corroboration": null
    },
    {
@@ -7080,7 +7080,7 @@
     "lat": -32.804089833,
     "lon": 151.511838166,
     "lot_ref": "11/DP3816",
-    "days_since_activity": 68,
+    "days_since_activity": 69,
     "cost_all_declared": [
      2925500.0
     ],
@@ -7149,7 +7149,7 @@
     "project_name": "Centre-based child care, Heddon Greta",
     "id": "TS-CESS-655145",
     "slug": "heddon-greta-centre-based-child-care-heddon-greta",
-    "age_days": 5,
+    "age_days": 6,
     "corroboration": null
    },
    {
@@ -7195,7 +7195,7 @@
     "lat": -32.836048513,
     "lon": 151.35168691,
     "lot_ref": "3/DP9252",
-    "days_since_activity": 115,
+    "days_since_activity": 116,
     "cost_all_declared": [
      2788720.0
     ],
@@ -7264,7 +7264,7 @@
     "project_name": "Centre-based child care, Cessnock",
     "id": "TS-CESS-639371",
     "slug": "cessnock-centre-based-child-care-cessnock",
-    "age_days": 10,
+    "age_days": 11,
     "corroboration": null
    }
   ],
@@ -7316,7 +7316,7 @@
     "lat": -32.906735859,
     "lon": 151.756725974,
     "lot_ref": null,
-    "days_since_activity": 3,
+    "days_since_activity": 4,
     "cost_all_declared": [
      1602306.0
     ],
@@ -7386,7 +7386,7 @@
     "project_name": "Light industry, Tighes Hill",
     "id": "TS-NEWC-1031680",
     "slug": "tighes-hill-light-industry-tighes-hill",
-    "age_days": 3,
+    "age_days": 4,
     "corroboration": null
    },
    {
@@ -7433,7 +7433,7 @@
     "lat": -32.816766099,
     "lon": 151.706646312,
     "lot_ref": null,
-    "days_since_activity": 3,
+    "days_since_activity": 4,
     "cost_all_declared": [
      997601.0
     ],
@@ -7504,7 +7504,7 @@
     "project_name": "General industry, Tomago",
     "id": "TS-PORT-1026061",
     "slug": "tomago-general-industry-tomago",
-    "age_days": 3,
+    "age_days": 4,
     "corroboration": null
    },
    {
@@ -7548,7 +7548,7 @@
     "lat": -32.990309369,
     "lon": 151.701342907,
     "lot_ref": null,
-    "days_since_activity": 108,
+    "days_since_activity": 109,
     "cost_all_declared": [
      14794316.49
     ],
@@ -7616,7 +7616,7 @@
     "project_name": "Industrial development, Gateshead",
     "id": "TS-LAKE-363603",
     "slug": "gateshead-industrial-development-gateshead",
-    "age_days": 2,
+    "age_days": 3,
     "corroboration": null
    },
    {
@@ -7662,7 +7662,7 @@
     "lat": -32.78875301,
     "lon": 151.632484346,
     "lot_ref": "101/DP873751",
-    "days_since_activity": 11,
+    "days_since_activity": 12,
     "cost_all_declared": [
      2984505.0
     ],
@@ -7730,7 +7730,7 @@
     "project_name": "Warehouse or distribution centre, Thornton",
     "id": "TS-MAIT-671711",
     "slug": "thornton-warehouse-or-distribution-centre-thornton",
-    "age_days": 10,
+    "age_days": 11,
     "corroboration": null
    },
    {
@@ -7778,7 +7778,7 @@
     "lat": -32.940513805,
     "lon": 151.717648028,
     "lot_ref": null,
-    "days_since_activity": 2,
+    "days_since_activity": 3,
     "cost_all_declared": [
      380600.0
     ],
@@ -7849,7 +7849,7 @@
     "project_name": "Alterations or additions to an existing building or structure, Adamstown",
     "id": "TS-NEWC-1031996",
     "slug": "adamstown-alterations-or-additions-to-an-existing-building-or-structure-adamstow",
-    "age_days": 1,
+    "age_days": 2,
     "corroboration": null
    },
    {
@@ -7894,7 +7894,7 @@
     "lat": -32.72154179,
     "lon": 151.495552116,
     "lot_ref": "2/DP1197299",
-    "days_since_activity": 13,
+    "days_since_activity": 14,
     "cost_all_declared": [
      2794000.0
     ],
@@ -7962,7 +7962,7 @@
     "project_name": "Industrial development, Rutherford",
     "id": "TS-MAIT-650714",
     "slug": "rutherford-industrial-development-rutherford",
-    "age_days": 11,
+    "age_days": 12,
     "corroboration": null
    },
    {
@@ -8009,7 +8009,7 @@
     "lat": -32.70399215,
     "lon": 151.498754255,
     "lot_ref": "813/DP1182211",
-    "days_since_activity": 6,
+    "days_since_activity": 7,
     "cost_all_declared": [
      4488900.0
     ],
@@ -8079,7 +8079,7 @@
     "project_name": "Light industry, Rutherford",
     "id": "TS-MAIT-674525",
     "slug": "rutherford-light-industry-rutherford",
-    "age_days": 5,
+    "age_days": 6,
     "corroboration": null
    },
    {
@@ -8124,7 +8124,7 @@
     "lat": -32.790760434,
     "lon": 151.741007595,
     "lot_ref": "214/DP1306660",
-    "days_since_activity": 34,
+    "days_since_activity": 35,
     "cost_all_declared": [
      3190000.0
     ],
@@ -8192,7 +8192,7 @@
     "project_name": "Warehouse or distribution centre, Heatherbrae",
     "id": "TS-PORT-665799",
     "slug": "heatherbrae-warehouse-or-distribution-centre-heatherbrae",
-    "age_days": 10,
+    "age_days": 11,
     "corroboration": null
    }
   ],
@@ -8242,7 +8242,7 @@
     "lat": -33.142639937,
     "lon": 151.41968767,
     "lot_ref": null,
-    "days_since_activity": 2,
+    "days_since_activity": 3,
     "cost_all_declared": [
      631749.0
     ],
@@ -8310,7 +8310,7 @@
     "project_name": "Demolition, Mandalong",
     "id": "TS-LAKE-1029882",
     "slug": "mandalong-demolition-mandalong",
-    "age_days": 2,
+    "age_days": 3,
     "corroboration": null
    },
    {
@@ -8358,7 +8358,7 @@
     "lat": -32.771420045,
     "lon": 151.57040457,
     "lot_ref": null,
-    "days_since_activity": 93,
+    "days_since_activity": 94,
     "cost_all_declared": [
      21850000.0
     ],
@@ -8424,7 +8424,7 @@
     "project_name": "Erection of a new structure, Maitland LGA",
     "id": "TS-MAIT-645939",
     "slug": "address-not-supplied-erection-of-a-new-structure-maitland-lga",
-    "age_days": 9,
+    "age_days": 10,
     "corroboration": null
    }
   ]
@@ -8438,14 +8438,14 @@
   },
   {
    "label": "Lake Macquarie",
-   "count": 330,
-   "value": 185505008,
+   "count": 329,
+   "value": 185417008,
    "high": 8
   },
   {
    "label": "Maitland",
    "count": 205,
-   "value": 152980847,
+   "value": 152980846,
    "high": 2
   },
   {
@@ -8469,8 +8469,8 @@
   },
   {
    "label": "Under assessment",
-   "count": 229,
-   "value": 124164173
+   "count": 228,
+   "value": 124076173
   },
   {
    "label": "On exhibition",
@@ -8518,10 +8518,10 @@
   },
   {
    "label": "Commercial",
-   "count": 90,
-   "value": 233241912,
-   "electrical_low": 21102379,
-   "electrical_high": 35096889
+   "count": 89,
+   "value": 233153912,
+   "electrical_low": 21094459,
+   "electrical_high": 35083689
   },
   {
    "label": "Industrial",
