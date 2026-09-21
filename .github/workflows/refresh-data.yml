@@ -1,0 +1,306 @@
+# =====================================================================
+# Tradiesignal :: weekly data refresh
+# =====================================================================
+# Pulls the current NSW ePlanning data, rescores it, rebuilds the site and
+# commits the result. Netlify is watching this branch, so the commit is the
+# deploy — nothing else to trigger.
+#
+# This is the job that removes the "I have to be home on Sunday night"
+# dependency. It is also the job that will quietly rot if nobody watches it,
+# so it fails loudly rather than publishing an empty site.
+#
+# Manual run: Actions tab -> Weekly data refresh -> Run workflow.
+# =====================================================================
+
+name: Weekly data refresh
+
+on:
+  schedule:
+    # 18:00 UTC Sunday = 04:00 Monday AEST (05:00 during AEDT).
+    # Lands well before the 6am digest and before anyone opens the site.
+    # Want it daily instead? Use '0 18 * * *' — see docs/08-auto-refresh.md
+    # for the trade-off on repository size.
+    - cron: '0 18 * * 0'
+  workflow_dispatch:
+    inputs:
+      days:
+        description: 'Collection window in days'
+        required: false
+        default: '120'
+      skip_pdf:
+        description: 'Skip the PDF rebuild (faster)'
+        type: boolean
+        required: false
+        default: false
+
+# Only one refresh at a time. Two concurrent runs would race on the commit.
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Chromium is only needed for the PDF. Cached so most runs skip the
+      # download entirely.
+      - name: Cache Playwright browsers
+        if: ${{ !inputs.skip_pdf }}
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-v1
+
+      - name: Install Playwright
+        if: ${{ !inputs.skip_pdf }}
+        run: |
+          npm install playwright --no-save --silent
+          npx playwright install --with-deps chromium
+
+      # -----------------------------------------------------------------
+      # 1. Collect
+      # -----------------------------------------------------------------
+      - name: Collect NSW ePlanning data
+        id: collect
+        env:
+          PYTHONPATH: src
+        run: |
+          python3 src/collect_eplanning.py \
+            --days "${{ inputs.days || '120' }}" \
+            --out data/raw
+
+      # A misspelled council name, a moved endpoint or an outage all look the
+      # same from here: HTTP 200 and no records. Publishing that would wipe the
+      # site and nobody would notice for a week. Refuse instead.
+      - name: Guard against a silent empty collection
+        run: |
+          python3 - <<'PY'
+          import glob, json, sys
+
+          manifests = sorted(glob.glob("data/raw/manifest_*.json"))
+          if not manifests:
+              sys.exit("FAIL: no manifest written — the collector did not run")
+
+          m = json.load(open(manifests[-1]))
+          counts = m.get("counts", {})
+          print(json.dumps(counts, indent=2))
+
+          # Floors are deliberately well below a normal fortnight (~2,000 DAs,
+          # ~1,300 CDCs, ~1,450 CCs over 120 days) so ordinary variation never
+          # trips them, but a broken feed always does.
+          FLOORS = {"OnlineDA": 300, "OnlineCDC": 150, "OnlineCC": 150}
+          problems = [
+              f"{svc}: {counts.get(svc, 0)} records (expected at least {floor})"
+              for svc, floor in FLOORS.items()
+              if counts.get(svc, 0) < floor
+          ]
+          if m.get("errors"):
+              problems.append(f"{len(m['errors'])} source errors: {m['errors'][:3]}")
+
+          if problems:
+              print("::error::Collection looks broken, refusing to publish")
+              for p in problems:
+                  print(f"::error::{p}")
+              sys.exit(1)
+
+          print("Collection looks healthy.")
+          PY
+
+      # -----------------------------------------------------------------
+      # 2. Score and build
+      # -----------------------------------------------------------------
+      - name: Score and normalise
+        env:
+          PYTHONPATH: src
+        run: python3 src/normalise_and_score.py
+
+      - name: Build report data
+        env:
+          PYTHONPATH: src
+        run: python3 src/report_data.py
+
+      - name: Render report, pages and site
+        env:
+          PYTHONPATH: src
+        run: |
+          python3 src/build_report.py
+          python3 src/build_landing.py
+          python3 src/build_dashboard.py \
+            --data-url /data/dashboard.json \
+            --data-file site/dashboard-data.json
+
+      - name: Export PDF
+        if: ${{ !inputs.skip_pdf }}
+        run: node src/export_pdf.cjs
+
+      - name: Assemble the deployable site
+        env:
+          PYTHONPATH: src
+        run: |
+          python3 src/build_site.py \
+            --domain "${{ vars.SITE_DOMAIN || 'tradiesignal.com' }}" \
+            --checkout "${{ vars.CHECKOUT_URL || '#pricing' }}"
+
+      # Belt and braces: never let an empty or truncated page reach the site.
+      - name: Sanity-check the build
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          from pathlib import Path
+
+          checks = {
+              "deploy/index.html": 50_000,
+              "deploy/sample-report/index.html": 40_000,
+              "deploy/demo/index.html": 10_000,
+              "deploy/data/dashboard.json": 100_000,
+          }
+          bad = []
+          for path, floor in checks.items():
+              p = Path(path)
+              if not p.exists():
+                  bad.append(f"{path} missing")
+              elif p.stat().st_size < floor:
+                  bad.append(f"{path} is only {p.stat().st_size:,} bytes (expected >{floor:,})")
+
+          data = json.loads(Path("deploy/data/dashboard.json").read_text())
+          if len(data.get("rows", [])) < 200:
+              bad.append(f"only {len(data.get('rows', []))} dashboard rows")
+
+          if bad:
+              print("::error::Build output failed sanity checks")
+              for b in bad:
+                  print(f"::error::{b}")
+              sys.exit(1)
+
+          print(f"Build OK — {len(data['rows']):,} rows, generated {data['meta']['generated']}")
+          PY
+
+      # -----------------------------------------------------------------
+      # 3. Publish
+      # -----------------------------------------------------------------
+      - name: Commit and push
+        id: commit
+        run: |
+          git config user.name  "tradiesignal-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          # data/raw/ is gitignored: it is ~7MB of API snapshots that
+          # regenerate in four minutes, and versioning it bloats the repo
+          # for no benefit.
+          git add deploy data/projects.csv data/summary.json data/report_payload.json \
+                  site reports/report_web.html reports/report_print.html || true
+          if [ -f reports/Tradiesignal_Hunter_Report.pdf ]; then
+            git add reports/Tradiesignal_Hunter_Report.pdf
+          fi
+
+          if git diff --cached --quiet; then
+            echo "No changes — nothing lodged with the councils since the last run."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            # Heredoc rather than python3 -c: nesting quotes and a literal
+            # dollar sign through bash inside YAML is a reliable way to ship
+            # a backslash into your own commit messages.
+            python3 > /tmp/summary.txt <<'PY'
+          import json
+          s = json.load(open("data/summary.json"))
+          value = s["construction_value_verified"] / 1e9
+          print("{:,} projects, ${:.2f}bn verified".format(s["projects_live"], value))
+          PY
+            git commit -m "Data refresh $(date -u +%Y-%m-%d): $(cat /tmp/summary.txt)"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Tradiesignal data refresh"
+            echo ""
+            if [ -f data/summary.json ]; then
+              python3 - <<'PY'
+          import json
+          s = json.load(open("data/summary.json"))
+          q = s["quality"]["cost_confidence"]
+          print(f"- **Generated:** {s['generated']}")
+          print(f"- **Projects tracked:** {s['projects_live']:,}")
+          print(f"- **Verified construction value:** ${s['construction_value_verified']/1e9:.2f}bn")
+          print(f"- **High priority:** {s['by_priority'].get('high', 0)}")
+          print(f"- **Flagged as suspect/unverified:** {q.get('suspect',0) + q.get('unverified',0)}")
+          print("")
+          print("**Most active builders**")
+          for b in s["top_builders"][:5]:
+              print(f"- {b['builder']} — {b['jobs']} jobs, ${b['value']:,}")
+          PY
+            else
+              echo "Build did not reach the summary stage."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  # A failed refresh is invisible unless something shouts. This opens an issue
+  # so it lands in your notifications rather than only in the Actions tab.
+  alert-on-failure:
+    needs: refresh
+    if: failure()
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Open an issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `Data refresh failed — ${new Date().toISOString().slice(0,10)}`;
+            const body = [
+              'The weekly Tradiesignal data refresh failed, so **the site is still showing last week\'s data**.',
+              '',
+              `[View the run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`,
+              '',
+              'Most likely causes, in order:',
+              '1. A council name no longer matches the ePlanning API\'s Appendix 1 list (returns HTTP 200 with zero records).',
+              '2. The `api.apps1.nsw.gov.au` endpoint moved or is down.',
+              '3. A field the scorer depends on changed shape.',
+              '',
+              'Check by hand:',
+              '```bash',
+              'curl -s "https://api.apps1.nsw.gov.au/eplanning/data/v0/OnlineCC" \\',
+              '  -H "PageSize: 1" -H "PageNumber: 1" \\',
+              '  -H \'filters: {"filters":{"CouncilName":["Newcastle City Council"]}}\' | head -c 400',
+              '```',
+            ].join('\n');
+
+            // Reuse an open issue rather than stacking one up per week.
+            const existing = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'data-refresh',
+            });
+            if (existing.data.length) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: existing.data[0].number, body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner, repo: context.repo.repo,
+                title, body, labels: ['data-refresh'],
+              });
+            }
