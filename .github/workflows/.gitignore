@@ -1,0 +1,10 @@
+data/raw/
+data/projects.json
+site/
+node_modules/
+package.json
+package-lock.json
+__pycache__/
+*.pyc
+.env
+.DS_Store
