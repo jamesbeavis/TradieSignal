@@ -1,0 +1,608 @@
+<title>Hunter Opportunity Dashboard</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"><style>
+:root{
+  --ink:#0A1628; --ink-2:#28405E; --grey:#5A6B82; --grey-2:#8494A8;
+  --app:#EEF2F7; --card:#FFFFFF; --rule:#D9E1EC; --rule-2:#EAEFF6;
+  --navy:#0A1B2B; --navy-2:#15334D;
+  --blue:#0B6BF2; --blue-ink:#0A4FB4; --blue-wash:#E9F2FE;
+  --green:#00E07A; --green-ink:#00713F; --green-wash:#E3FAEE;
+  --warn:#8A5107; --warn-wash:#FDF3E3;
+  --on-navy:#EDF3FA; --on-navy-2:#93AEC9;
+  --shadow:0 1px 2px rgba(10,22,40,.07),0 6px 20px rgba(10,22,40,.08);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#E9EFF7; --ink-2:#C0CEE0; --grey:#93A5BA; --grey-2:#6E8299;
+  --app:#070E18; --card:#101C2C; --rule:#22344A; --rule-2:#18283C;
+  --navy:#050F1B; --navy-2:#14304A;
+  --blue:#5B9CFF; --blue-ink:#8FBEFF; --blue-wash:#122540;
+  --green:#00E07A; --green-ink:#41E39A; --green-wash:#0B2A1D;
+  --warn:#E0A458; --warn-wash:#2B2113;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --ink:#E9EFF7; --ink-2:#C0CEE0; --grey:#93A5BA; --grey-2:#6E8299;
+  --app:#070E18; --card:#101C2C; --rule:#22344A; --rule-2:#18283C;
+  --navy:#050F1B; --navy-2:#14304A;
+  --blue:#5B9CFF; --blue-ink:#8FBEFF; --blue-wash:#122540;
+  --green:#00E07A; --green-ink:#41E39A; --green-wash:#0B2A1D;
+  --warn:#E0A458; --warn-wash:#2B2113;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--app);color:var(--ink);
+  font-family:"IBM Plex Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:14px;line-height:1.5}
+h1,h2,h3,h4{font-family:Archivo,"Arial Narrow",Helvetica,sans-serif;margin:0;
+  letter-spacing:-.015em;text-wrap:balance}
+p{margin:0}
+button,select,input{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+/* ---- top bar ---- */
+.top{background:var(--navy);border-bottom:2px solid var(--green);
+  position:sticky;top:0;z-index:30}
+.top-in{max-width:1400px;margin:0 auto;padding:12px 18px;display:flex;
+  align-items:center;gap:14px;flex-wrap:wrap}
+.logo{font-family:Archivo,sans-serif;font-weight:800;font-size:19px;color:#fff;
+  letter-spacing:-.03em;white-space:nowrap}
+.logo .sig{color:var(--green)}
+.top-tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--on-navy-2);border:1px solid #2A4964;
+  padding:3px 8px;border-radius:3px}
+.top-right{margin-left:auto;font-size:12.5px;color:var(--on-navy-2);
+  display:flex;align-items:center;gap:8px}
+.top-right i{width:7px;height:7px;border-radius:50%;background:var(--green);flex:none}
+.top-right .stale{color:#E0A458;font-weight:600}
+
+/* ---- shell ---- */
+.shell{max-width:1400px;margin:0 auto;padding:20px 18px 60px}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;
+  gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.page-head h1{font-size:24px;font-weight:800}
+.page-head p{color:var(--grey);font-size:13.5px;margin-top:5px;max-width:70ch}
+
+/* ---- stat row ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:12px;margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 16px}
+.stat dt{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--grey-2);margin-bottom:6px}
+.stat dd{margin:0;font-family:Archivo,sans-serif;font-weight:700;font-size:25px;
+  line-height:1.05;font-variant-numeric:tabular-nums}
+.stat dd small{display:block;font-family:"IBM Plex Sans",sans-serif;font-weight:400;
+  font-size:11.5px;color:var(--grey);margin-top:5px;letter-spacing:0}
+.stat-hi dd{color:var(--green-ink)}
+
+/* ---- filters ---- */
+.filters{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  padding:14px 16px;margin-bottom:16px}
+.frow{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}
+.fgroup{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fgroup>label{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--grey-2);font-weight:600}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chipbtn{border:1px solid var(--rule);background:var(--card);color:var(--ink-2);
+  border-radius:3px;padding:6px 11px;font-size:12.5px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.chipbtn i{width:9px;height:9px;border-radius:2px;flex:none;background:var(--dot,var(--grey-2))}
+.chipbtn[aria-pressed="true"]{background:var(--ink);color:var(--card);
+  border-color:var(--ink)}
+.chipbtn:hover{border-color:var(--blue)}
+select{border:1px solid var(--rule);background:var(--card);border-radius:3px;
+  padding:7px 10px;font-size:13px;min-width:150px;cursor:pointer}
+.search{border:1px solid var(--rule);background:var(--card);border-radius:3px;
+  padding:7px 11px;font-size:13px;min-width:210px}
+.fclear{margin-left:auto;background:none;border:0;color:var(--blue-ink);
+  font-size:13px;cursor:pointer;text-decoration:underline;padding:7px 0}
+
+/* ---- table ---- */
+.tablewrap{background:var(--card);border:1px solid var(--rule);border-radius:4px;
+  overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:940px}
+thead th{position:sticky;top:0;background:var(--card);text-align:left;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);
+  font-weight:600;padding:11px 14px;border-bottom:1px solid var(--rule);
+  white-space:nowrap;z-index:2}
+tbody tr{border-bottom:1px solid var(--rule-2);cursor:pointer}
+tbody tr:last-child{border-bottom:0}
+tbody tr:hover{background:var(--blue-wash)}
+tbody tr[aria-selected="true"]{background:var(--blue-wash);
+  box-shadow:inset 3px 0 0 var(--blue)}
+td{padding:12px 14px;vertical-align:top}
+.c-score{width:56px}
+.scorepill{display:inline-flex;flex-direction:column;align-items:center;
+  gap:3px;min-width:38px}
+.scorepill b{font-family:"IBM Plex Mono",monospace;font-size:14px;font-weight:600;
+  font-variant-numeric:tabular-nums;color:var(--blue-ink)}
+.scorepill span{display:block;width:34px;height:3px;border-radius:2px;
+  background:var(--rule);overflow:hidden}
+.scorepill span i{display:block;height:100%;background:var(--blue)}
+tr[data-prio="high"] .scorepill b{color:var(--green-ink)}
+tr[data-prio="high"] .scorepill span i{background:var(--green-ink)}
+.c-name strong{display:block;font-weight:600;font-size:13.5px}
+.c-name em{display:block;font-style:normal;color:var(--grey);font-size:12.5px;
+  margin-top:2px}
+.tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:#fff;padding:2px 7px;border-radius:2px;
+  margin-top:6px;background:var(--tagc)}
+.c-stage{white-space:nowrap}
+.stagepill{display:inline-block;font-size:11.5px;padding:3px 9px;border-radius:11px;
+  border:1px solid var(--rule);color:var(--ink-2);white-space:nowrap}
+.stagepill[data-s="cc"]{border-color:var(--green-ink);color:var(--green-ink);
+  background:var(--green-wash);font-weight:600}
+.stagepill[data-s="cdc"]{border-color:var(--blue);color:var(--blue-ink);
+  background:var(--blue-wash)}
+.c-cost,.c-elec{white-space:nowrap;font-variant-numeric:tabular-nums}
+.c-cost b{font-weight:600}
+.c-cost em{display:block;font-style:normal;font-size:11px;color:var(--grey-2);
+  margin-top:2px}
+.c-cost em.bad{color:var(--warn)}
+.c-elec{color:var(--ink-2)}
+.c-builder{font-size:12.5px;color:var(--ink-2);max-width:190px}
+.c-builder.none{color:var(--grey-2)}
+.empty{padding:52px 20px;text-align:center;color:var(--grey)}
+.empty strong{display:block;font-family:Archivo,sans-serif;font-size:17px;
+  color:var(--ink);margin-bottom:7px}
+
+.more{display:flex;justify-content:center;padding:16px}
+.morebtn{background:var(--card);border:1px solid var(--rule);border-radius:3px;
+  padding:9px 20px;font-size:13.5px;cursor:pointer;color:var(--ink-2)}
+.morebtn:hover{border-color:var(--blue);color:var(--blue-ink)}
+
+/* ---- detail drawer ---- */
+.scrim{position:fixed;inset:0;background:rgba(6,16,28,.5);z-index:50;border:0}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);
+  background:var(--card);border-left:1px solid var(--rule);z-index:51;
+  overflow-y:auto;box-shadow:-16px 0 44px rgba(6,16,28,.28)}
+.d-head{position:sticky;top:0;background:var(--card);
+  border-bottom:1px solid var(--rule);padding:18px 22px;z-index:2}
+.d-close{position:absolute;top:14px;right:16px;background:none;border:0;
+  font-size:24px;line-height:1;cursor:pointer;color:var(--grey);padding:4px 8px}
+.d-close:hover{color:var(--ink)}
+.d-chips{display:flex;gap:7px;align-items:center;flex-wrap:wrap;
+  padding-right:40px}
+.d-head h2{font-size:20px;font-weight:700;margin-top:11px;padding-right:34px}
+.d-addr{color:var(--grey);font-size:13.5px;margin-top:4px}
+.d-body{padding:20px 22px 40px}
+.d-sec{margin-bottom:24px}
+.d-sec>h3{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--grey-2);font-weight:600;margin-bottom:10px}
+.d-facts{display:grid;grid-template-columns:1fr 1fr;gap:13px 18px;margin:0}
+.d-facts dt{font-size:11px;color:var(--grey-2);margin-bottom:2px}
+.d-facts dd{margin:0;font-weight:600;font-size:15px;font-variant-numeric:tabular-nums}
+.d-facts dd small{font-weight:400;font-size:11.5px;color:var(--grey);display:block}
+.d-builder{padding:13px 15px;background:var(--blue-wash);border-left:3px solid var(--blue)}
+.d-builder span{display:block;font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--blue-ink);margin-bottom:3px}
+.d-builder strong{font-size:15px}
+.d-warn{padding:12px 14px;background:var(--warn-wash);border-left:3px solid var(--warn);
+  font-size:13px;color:var(--ink-2);margin-bottom:20px}
+.d-list{margin:0;padding:0;list-style:none;font-size:13.5px}
+.d-list li{padding:5px 0 5px 16px;position:relative;color:var(--ink-2)}
+.d-list li::before{content:"";position:absolute;left:0;top:.85em;width:7px;height:2px;
+  background:var(--blue)}
+.d-list.plus li::before{content:"+";background:none;color:var(--green-ink);
+  font-weight:700;top:3px;width:auto;height:auto}
+.d-play{padding:15px 17px;border:1px solid var(--rule);border-left:3px solid var(--green-ink);
+  border-radius:3px;background:var(--green-wash)}
+.d-when{display:inline-block;font-weight:700;font-size:13.5px;margin-bottom:7px}
+.d-play p{font-size:13.5px;color:var(--ink-2)}
+.d-who{margin-top:11px;font-size:13.5px}
+.d-refs{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.refpill{font-family:"IBM Plex Mono",monospace;font-size:11.5px;background:var(--rule-2);
+  padding:3px 8px;border-radius:2px;color:var(--ink-2)}
+.d-note{font-size:12px;color:var(--grey);margin-top:12px;line-height:1.5}
+.meter{height:6px;background:var(--rule);border-radius:3px;overflow:hidden;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--green-ink)}
+
+.foot-note{margin-top:22px;font-size:12px;color:var(--grey);max-width:96ch;
+  line-height:1.6}
+.foot-note strong{color:var(--ink-2)}
+
+@media (max-width:840px){
+  .page-head h1{font-size:20px}
+  .stat dd{font-size:21px}
+  .frow{gap:12px}
+  .search,select{min-width:0;width:100%}
+  .fgroup{width:100%}
+  .fclear{margin-left:0}
+  .d-facts{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<div class="top"><div class="top-in">
+  <span class="logo">Tradie<span class="sig">signal</span></span>
+  <span class="top-tag">Opportunity dashboard</span>
+  <span class="top-right"><i></i><span id="freshness">Live data</span></span>
+</div></div>
+
+<div class="shell">
+  <div class="page-head">
+    <div>
+      <h1>Hunter opportunity dashboard</h1>
+      <p>Every development application, complying development certificate and construction
+        certificate lodged with the five Hunter councils in the last 120 days — merged,
+        cross-checked and scored. Showing the top 1,500 by opportunity score.
+        Click any row for the full brief.</p>
+    </div>
+  </div>
+
+  <dl class="stats">
+    <div class="stat"><dt>Matching projects</dt><dd id="s-count">—</dd></div>
+    <div class="stat"><dt>Construction value</dt><dd id="s-value">—</dd></div>
+    <div class="stat"><dt>Electrical opportunity</dt><dd id="s-elec">—</dd></div>
+    <div class="stat stat-hi"><dt>High &amp; medium priority</dt><dd id="s-high">—</dd></div>
+    <div class="stat"><dt>Builders named</dt><dd id="s-builders">—</dd></div>
+  </dl>
+
+  <div class="filters">
+    <div class="frow">
+      <div class="fgroup"><label>Sector</label><div class="chips"><button class="chipbtn" type="button" data-group="Residential" aria-pressed="false" style="--dot:#1466E0"><i></i>Residential</button><button class="chipbtn" type="button" data-group="Commercial" aria-pressed="false" style="--dot:#E4681A"><i></i>Commercial</button><button class="chipbtn" type="button" data-group="Industrial" aria-pressed="false" style="--dot:#C42A62"><i></i>Industrial</button><button class="chipbtn" type="button" data-group="Government" aria-pressed="false" style="--dot:#8A7A12"><i></i>Government</button><button class="chipbtn" type="button" data-group="Infrastructure" aria-pressed="false" style="--dot:#6F52CC"><i></i>Infrastructure</button></div></div>
+      <div class="fgroup"><label>Radius from base</label><div class="chips"><button class="chipbtn" type="button" data-radius="0" aria-pressed="true">Any</button><button class="chipbtn" type="button" data-radius="10" aria-pressed="false">10 km</button><button class="chipbtn" type="button" data-radius="25" aria-pressed="false">25 km</button><button class="chipbtn" type="button" data-radius="50" aria-pressed="false">50 km</button><button class="chipbtn" type="button" data-radius="100" aria-pressed="false">100 km</button></div></div>
+      <button class="fclear" id="fclear" type="button">Clear all filters</button>
+    </div>
+    <div class="frow" style="margin-top:14px">
+      <div class="fgroup"><label for="f-base">Your base</label>
+        <select id="f-base"><option value="0">Newcastle CBD</option><option value="1">Charlestown</option><option value="2">Cardiff</option><option value="3">Maitland</option><option value="4">Raymond Terrace</option><option value="5">Nelson Bay</option><option value="6">Cessnock</option><option value="7">Morisset</option></select></div>
+      <div class="fgroup"><label for="f-council">Council</label>
+        <select id="f-council"><option value="">All five councils</option><option value="Cessnock">Cessnock</option><option value="Lake Macquarie">Lake Macquarie</option><option value="Maitland">Maitland</option><option value="Newcastle">Newcastle</option><option value="Port Stephens">Port Stephens</option></select></div>
+      <div class="fgroup"><label for="f-stage">Approval stage</label>
+        <select id="f-stage">
+          <option value="">Any stage</option>
+          <option value="cc">Construction certificate — work imminent</option>
+          <option value="cdc">Complying development — fast track</option>
+          <option value="da">Development application — pipeline</option>
+        </select></div>
+      <div class="fgroup"><label for="f-sort">Sort by</label>
+        <select id="f-sort">
+          <option value="score">Highest opportunity score</option>
+          <option value="value">Largest projects</option>
+          <option value="new">Most recently updated</option>
+          <option value="near">Closest to my base</option>
+        </select></div>
+      <div class="fgroup"><label for="f-q">Search</label>
+        <input class="search" id="f-q" type="search" placeholder="Suburb, builder, project type…"></div>
+    </div>
+  </div>
+
+  <div class="tablewrap" id="tablewrap">
+    <div class="empty"><strong>Loading the latest data…</strong>
+      Pulling the current project set.</div>
+  </div>
+  <div class="more" id="more"></div>
+
+  <p class="foot-note"><strong>About this data.</strong> Council development records come
+    from the NSW Planning Portal ePlanning open data APIs, © State of New South Wales
+    (Department of Planning, Housing and Infrastructure), used under CC BY 4.0 and
+    refreshed daily. Declared costs are lodged by applicants and are not audited by
+    council; we cross-check each one against floor area, dwelling count and lot count and
+    mark anything that fails. Opportunity scores, electrical estimates and contact timing
+    are Tradiesignal's own analysis and are estimates, not quotes. Always verify a project
+    against the council's DA tracker before committing time or money.</p>
+</div>
+
+<button class="scrim" id="scrim" hidden aria-label="Close detail"></button>
+<aside class="drawer" id="drawer" hidden aria-label="Project detail"></aside><script>var FIELD_NAMES=["id", "name", "addr", "suburb", "lga", "group", "cat", "stage", "status", "cost", "conf", "elo", "ehi", "score", "prio", "builder", "dw", "lots", "gfa", "storeys", "lat", "lon", "date", "win", "who", "angle", "scope", "sig", "ref", "cref", "flags"];var CAT_COLORS={"Residential": "#1466E0", "Commercial": "#E4681A", "Industrial": "#C42A62", "Government": "#8A7A12", "Infrastructure": "#6F52CC"};var BASE_LIST=[["Newcastle CBD", -32.9283, 151.7817], ["Charlestown", -32.9633, 151.696], ["Cardiff", -32.943, 151.656], ["Maitland", -32.7333, 151.55], ["Raymond Terrace", -32.76, 151.744], ["Nelson Bay", -32.72, 152.147], ["Cessnock", -32.8333, 151.35], ["Morisset", -33.108, 151.488]];</script><script>
+window.initDashboard = function(ROWS, META){
+  "use strict";
+  var F = {}; FIELD_NAMES.forEach(function(n,i){ F[n] = i; });
+  var ALL = ROWS;
+  var BASES = BASE_LIST;
+
+  var state = {
+    groups: new Set(),          // empty = all
+    radius: 0,                  // 0 = no limit
+    base: 0,
+    councils: "",
+    stage: "",
+    sort: "score",
+    q: "",
+    limit: 60,
+    selected: null
+  };
+
+  var $ = function(s){ return document.querySelector(s); };
+  var CAT = CAT_COLORS;
+
+  function money(v, dp){
+    if (v === null || v === undefined) return "—";
+    dp = dp === undefined ? 1 : dp;
+    if (v >= 1e9) return "$" + (v/1e9).toFixed(dp) + "bn";
+    if (v >= 1e6) return "$" + (v/1e6).toFixed(dp) + "m";
+    if (v >= 1e3) return "$" + Math.round(v/1e3).toLocaleString() + "k";
+    return "$" + Math.round(v).toLocaleString();
+  }
+  function moneyFull(v){
+    return (v === null || v === undefined) ? "—" : "$" + Math.round(v).toLocaleString();
+  }
+  function esc(s){
+    return String(s === null || s === undefined ? "" : s)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+  function km(lat1, lon1, lat2, lon2){
+    if (lat2 === null || lon2 === null) return null;
+    var R = 6371, p1 = lat1*Math.PI/180, p2 = lat2*Math.PI/180;
+    var dp = p2-p1, dl = (lon2-lon1)*Math.PI/180;
+    var a = Math.sin(dp/2)*Math.sin(dp/2) + Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)*Math.sin(dl/2);
+    return 2*R*Math.asin(Math.sqrt(a));
+  }
+  function stageKind(label){
+    if (label.indexOf("Construction certificate") === 0) return "cc";
+    if (label.indexOf("Complying development") === 0) return "cdc";
+    return "da";
+  }
+  function costOK(conf){ return conf === "high" || conf === "medium" || conf === "low"; }
+
+  function filtered(){
+    var base = BASES[state.base];
+    var q = state.q.trim().toLowerCase();
+    var out = [];
+    for (var i = 0; i < ALL.length; i++){
+      var r = ALL[i];
+      if (state.groups.size && !state.groups.has(r[F.group])) continue;
+      if (state.councils && r[F.lga] !== state.councils) continue;
+      if (state.stage && stageKind(r[F.stage]) !== state.stage) continue;
+      if (state.radius){
+        var d = km(base[1], base[2], r[F.lat], r[F.lon]);
+        if (d === null || d > state.radius) continue;
+      }
+      if (q){
+        var hay = (r[F.name] + " " + r[F.addr] + " " + r[F.builder] + " " + r[F.cat]).toLowerCase();
+        if (hay.indexOf(q) === -1) continue;
+      }
+      out.push(r);
+    }
+    if (state.sort === "score"){
+      out.sort(function(a,b){ return b[F.score]-a[F.score] || (b[F.cost]||0)-(a[F.cost]||0); });
+    } else if (state.sort === "value"){
+      out.sort(function(a,b){ return (b[F.cost]||0)-(a[F.cost]||0); });
+    } else if (state.sort === "new"){
+      out.sort(function(a,b){ return (b[F.date]||"").localeCompare(a[F.date]||"") || b[F.score]-a[F.score]; });
+    } else if (state.sort === "near"){
+      var bb = BASES[state.base];
+      out.sort(function(a,b){
+        var da = km(bb[1],bb[2],a[F.lat],a[F.lon]); var db = km(bb[1],bb[2],b[F.lat],b[F.lon]);
+        return (da===null?1e9:da) - (db===null?1e9:db);
+      });
+    }
+    return out;
+  }
+
+  function renderStats(rows){
+    var value = 0, elo = 0, ehi = 0, high = 0, builders = 0;
+    for (var i=0;i<rows.length;i++){
+      var r = rows[i];
+      if (r[F.cost] && costOK(r[F.conf])) value += r[F.cost];
+      if (r[F.elo]) { elo += r[F.elo]; ehi += r[F.ehi]; }
+      if (r[F.prio] === "high" || r[F.prio] === "medium") high++;
+      if (r[F.builder]) builders++;
+    }
+    $("#s-count").innerHTML = rows.length.toLocaleString() +
+      "<small>of " + ALL.length.toLocaleString() + " tracked</small>";
+    $("#s-value").innerHTML = money(value, 2) +
+      "<small>declared cost, cross-checked</small>";
+    $("#s-elec").innerHTML = money(elo, 1) +
+      "<small>to " + money(ehi, 1) + " estimated electrical share</small>";
+    $("#s-high").innerHTML = high.toLocaleString() +
+      "<small>worth acting on now</small>";
+    $("#s-builders").innerHTML = builders.toLocaleString() +
+      "<small>name the building company</small>";
+  }
+
+  function rowHTML(r, i){
+    var colour = CAT[r[F.group]] || "#1466E0";
+    var kind = stageKind(r[F.stage]);
+    var conf = r[F.conf];
+    var confNote = conf === "suspect" || conf === "unverified"
+      ? '<em class="bad">figure unverified</em>'
+      : (conf === "unknown" ? '<em>no figure lodged</em>' : "");
+    var elec = r[F.elo] ? money(r[F.elo]) + " – " + money(r[F.ehi]) : "—";
+    return '<tr data-i="' + i + '" data-prio="' + r[F.prio] + '" tabindex="0" role="button">' +
+      '<td class="c-score"><span class="scorepill"><b>' + r[F.score] + '</b>' +
+        '<span><i style="width:' + r[F.score] + '%"></i></span></span></td>' +
+      '<td class="c-name"><strong>' + esc(r[F.name]) + '</strong>' +
+        '<em>' + esc(r[F.addr]) + '</em>' +
+        '<span class="tag" style="--tagc:' + colour + '">' + esc(r[F.group]) + '</span></td>' +
+      '<td class="c-stage"><span class="stagepill" data-s="' + kind + '">' +
+        esc(r[F.stage]) + '</span></td>' +
+      '<td class="c-cost"><b>' + money(r[F.cost]) + '</b>' + confNote + '</td>' +
+      '<td class="c-elec">' + elec + '</td>' +
+      '<td class="c-builder' + (r[F.builder] ? "" : " none") + '">' +
+        esc(r[F.builder] || "Not appointed yet") + '</td>' +
+      '</tr>';
+  }
+
+  function render(){
+    var rows = filtered();
+    renderStats(rows);
+    var body = $("#tbody");
+    var shown = rows.slice(0, state.limit);
+    if (!rows.length){
+      $("#tablewrap").innerHTML = '<div class="empty"><strong>Nothing matches those filters.</strong>' +
+        'Try widening the radius or clearing a sector.</div>';
+      $("#more").innerHTML = "";
+      return;
+    }
+    if (!$("#tbody")){ buildTable(); body = $("#tbody"); }
+    body.innerHTML = shown.map(function(r){ return rowHTML(r, ALL.indexOf(r)); }).join("");
+    $("#more").innerHTML = rows.length > state.limit
+      ? '<button class="morebtn" id="morebtn">Show 60 more (' +
+        (rows.length - state.limit).toLocaleString() + ' remaining)</button>'
+      : (rows.length > 60 ? '<span style="color:var(--grey);font-size:12.5px">' +
+         'Showing all ' + rows.length.toLocaleString() + '</span>' : "");
+    var mb = $("#morebtn");
+    if (mb) mb.onclick = function(){ state.limit += 60; render(); };
+  }
+
+  function buildTable(){
+    $("#tablewrap").innerHTML =
+      '<table><thead><tr>' +
+      '<th>Score</th><th>Project</th><th>Stage</th><th>Project value</th>' +
+      '<th>Electrical est.</th><th>Builder</th>' +
+      '</tr></thead><tbody id="tbody"></tbody></table>';
+  }
+
+  function openDetail(idx){
+    var r = ALL[idx];
+    if (!r) return;
+    var colour = CAT[r[F.group]] || "#1466E0";
+    var base = BASES[state.base];
+    var d = km(base[1], base[2], r[F.lat], r[F.lon]);
+    var facts = [
+      ["Declared cost of development", moneyFull(r[F.cost]),
+        r[F.conf] === "high" ? "cross-checked against project scale"
+        : r[F.conf] === "medium" ? "within a plausible range"
+        : r[F.conf] === "unknown" ? "no figure lodged with council"
+        : "failed our plausibility check"],
+      ["Estimated electrical opportunity",
+        r[F.elo] ? money(r[F.elo]) + " – " + money(r[F.ehi]) : "not estimated",
+        "our estimate, not a quote"],
+      ["Council", r[F.lga], r[F.suburb] || ""],
+      ["Distance from " + base[0], d === null ? "—" : d.toFixed(0) + " km", ""]
+    ];
+    if (r[F.dw]) facts.push(["Dwellings", r[F.dw].toLocaleString(), ""]);
+    if (r[F.lots]) facts.push(["Lots proposed", r[F.lots].toLocaleString(), ""]);
+    if (r[F.gfa]) facts.push(["Proposed floor area", r[F.gfa].toLocaleString() + " m²", ""]);
+    if (r[F.storeys]) facts.push(["Storeys", r[F.storeys], ""]);
+
+    var warn = (r[F.conf] === "suspect" || r[F.conf] === "unverified")
+      ? '<div class="d-warn"><strong>Treat the dollar figure with caution.</strong> ' +
+        'The lodged cost is ' + moneyFull(r[F.cost]) + ' but it fails our plausibility ' +
+        'check (' + esc((r[F.flags]||[]).join(", ")) + '). The project is real — the ' +
+        'number is not confirmed.</div>'
+      : "";
+
+    var builder = r[F.builder]
+      ? '<div class="d-builder"><span>Builder on the certificate</span><strong>' +
+        esc(r[F.builder]) + '</strong></div>'
+      : '<div class="d-builder" style="background:var(--rule-2);border-left-color:var(--grey-2)">' +
+        '<span style="color:var(--grey)">Builder</span><strong style="font-weight:500">' +
+        'Not appointed yet — this is the window to get in front of the developer</strong></div>';
+
+    $("#drawer").innerHTML =
+      '<div class="d-head">' +
+        '<button class="d-close" id="dclose" aria-label="Close">×</button>' +
+        '<div class="d-chips">' +
+          '<span class="tag" style="--tagc:' + colour + ';margin:0">' + esc(r[F.group]) + '</span>' +
+          '<span class="stagepill" data-s="' + stageKind(r[F.stage]) + '">' + esc(r[F.stage]) + '</span>' +
+          '<span style="font-size:12.5px;color:var(--grey)">' + esc(r[F.cat]) + '</span>' +
+        '</div>' +
+        '<h2>' + esc(r[F.name]) + '</h2>' +
+        '<p class="d-addr">' + esc(r[F.addr]) + '</p>' +
+        '<div style="margin-top:12px"><div style="display:flex;justify-content:space-between;' +
+          'align-items:baseline"><span style="font-size:10.5px;letter-spacing:.11em;' +
+          'text-transform:uppercase;color:var(--grey-2)">Opportunity score</span>' +
+          '<b style="font-family:Archivo,sans-serif;font-size:19px">' + r[F.score] + '/100</b></div>' +
+          '<div class="meter"><i style="width:' + r[F.score] + '%"></i></div></div>' +
+      '</div>' +
+      '<div class="d-body">' +
+        warn +
+        '<div class="d-sec"><h3>The numbers</h3><dl class="d-facts">' +
+          facts.map(function(f){
+            return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) +
+              (f[2] ? '<small>' + esc(f[2]) + '</small>' : "") + '</dd></div>';
+          }).join("") +
+        '</dl></div>' +
+        '<div class="d-sec">' + builder + '</div>' +
+        '<div class="d-sec"><h3>What to do about it</h3><div class="d-play">' +
+          '<span class="d-when">' + esc(r[F.win]) + '</span>' +
+          '<p>' + esc(r[F.angle]) + '</p>' +
+          '<p class="d-who"><strong>Who to ask for:</strong> ' + esc(r[F.who]) + '</p>' +
+        '</div></div>' +
+        '<div class="d-sec"><h3>Likely electrical scope</h3><ul class="d-list">' +
+          (r[F.scope]||[]).map(function(s){ return '<li>' + esc(s) + '</li>'; }).join("") +
+        '</ul></div>' +
+        ((r[F.sig]||[]).length
+          ? '<div class="d-sec"><h3>Why it scored this way</h3><ul class="d-list plus">' +
+            r[F.sig].map(function(s){ return '<li>' + esc(s) + '</li>'; }).join("") + '</ul></div>'
+          : "") +
+        '<div class="d-sec"><h3>Source references</h3><div class="d-refs">' +
+          '<span class="refpill">' + esc(r[F.ref]) + '</span>' +
+          (r[F.cref] ? '<span class="refpill">' + esc(r[F.cref]) + '</span>' : "") +
+          '<span class="refpill">Updated ' + esc(r[F.date]) + '</span>' +
+        '</div><p class="d-note">Sourced from the NSW Planning Portal ePlanning open data ' +
+          'feeds (CC-BY). Look this reference up on the council’s DA tracker to confirm ' +
+          'the current status before you quote. Scores, electrical estimates and timing ' +
+          'advice are Tradiesignal’s analysis, not official information.</p></div>' +
+      '</div>';
+
+    $("#drawer").hidden = false;
+    $("#scrim").hidden = false;
+    $("#dclose").onclick = closeDetail;
+    $("#drawer").scrollTop = 0;
+    $("#dclose").focus();
+    var tr = document.querySelector('tr[data-i="' + idx + '"]');
+    document.querySelectorAll("tbody tr").forEach(function(x){ x.removeAttribute("aria-selected"); });
+    if (tr) tr.setAttribute("aria-selected", "true");
+  }
+  function closeDetail(){
+    $("#drawer").hidden = true;
+    $("#scrim").hidden = true;
+    document.querySelectorAll("tbody tr").forEach(function(x){ x.removeAttribute("aria-selected"); });
+  }
+
+  // ---- wiring ------------------------------------------------------------
+  document.addEventListener("click", function(ev){
+    var chip = ev.target.closest(".chipbtn");
+    if (chip && chip.dataset.group){
+      var g = chip.dataset.group;
+      if (state.groups.has(g)) state.groups.delete(g); else state.groups.add(g);
+      chip.setAttribute("aria-pressed", state.groups.has(g) ? "true" : "false");
+      state.limit = 60; render(); return;
+    }
+    if (chip && chip.dataset.radius !== undefined){
+      state.radius = Number(chip.dataset.radius);
+      document.querySelectorAll("[data-radius]").forEach(function(b){
+        b.setAttribute("aria-pressed", Number(b.dataset.radius) === state.radius ? "true" : "false");
+      });
+      state.limit = 60; render(); return;
+    }
+    var tr = ev.target.closest("tbody tr");
+    if (tr){ openDetail(Number(tr.dataset.i)); return; }
+    if (ev.target.id === "scrim") closeDetail();
+    if (ev.target.id === "fclear"){
+      state.groups.clear(); state.radius = 0; state.councils = ""; state.stage = "";
+      state.q = ""; state.limit = 60;
+      $("#f-council").value = ""; $("#f-stage").value = ""; $("#f-q").value = "";
+      document.querySelectorAll("[data-group]").forEach(function(b){ b.setAttribute("aria-pressed","false"); });
+      document.querySelectorAll("[data-radius]").forEach(function(b){
+        b.setAttribute("aria-pressed", b.dataset.radius === "0" ? "true" : "false"); });
+      render();
+    }
+  });
+  document.addEventListener("keydown", function(ev){
+    if (ev.key === "Escape") closeDetail();
+    if ((ev.key === "Enter" || ev.key === " ") && document.activeElement &&
+        document.activeElement.matches("tbody tr")){
+      ev.preventDefault();
+      openDetail(Number(document.activeElement.dataset.i));
+    }
+  });
+  $("#f-council").onchange = function(){ state.councils = this.value; state.limit=60; render(); };
+  $("#f-stage").onchange   = function(){ state.stage = this.value; state.limit=60; render(); };
+  $("#f-sort").onchange    = function(){ state.sort = this.value; render(); };
+  $("#f-base").onchange    = function(){ state.base = Number(this.value); render(); };
+  $("#f-q").oninput        = function(){ state.q = this.value; state.limit=60; render(); };
+
+  // Data freshness. A stale site that looks live is worse than one that
+  // admits it — subscribers make decisions off these dates.
+  if (META && META.generated) {
+    var el = document.getElementById("freshness");
+    if (el) {
+      var days = Math.floor((Date.now() - Date.parse(META.generated)) / 864e5);
+      var human = new Date(META.generated + "T00:00:00").toLocaleDateString("en-AU",
+        { day: "numeric", month: "long", year: "numeric" });
+      el.textContent = "Data current as at " + human;
+      if (days > 14) {
+        el.textContent += " \u2014 " + days + " days old";
+        el.className = "stale";
+      }
+    }
+  }
+
+  buildTable();
+  render();
+};
+</script><script>fetch("/data/dashboard.json", {cache:'no-cache'}).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }).then(function(d){ window.initDashboard(d.rows, d.meta); }).catch(function(e){  document.getElementById('tablewrap').innerHTML =    '<div class="empty"><strong>Couldn’t load the project data.</strong>'  + 'Refresh the page. If it keeps happening the weekly data refresh may have failed '  + '— let us know.</div>';  console.error('dashboard data load failed', e);});</script>

@@ -1,0 +1,655 @@
+{
+  "generated": "2026-09-20",
+  "projects_total": 3903,
+  "projects_live": 3864,
+  "withdrawn": 39,
+  "construction_value_verified": 3216907600,
+  "electrical_opportunity_low": 297697093,
+  "electrical_opportunity_high": 509412308,
+  "by_priority": {
+    "high": 33,
+    "medium": 67,
+    "watch": 1013,
+    "low": 2751
+  },
+  "by_category": {
+    "New residential": 2384,
+    "Minor works": 729,
+    "Residential renovation": 213,
+    "Commercial": 138,
+    "Subdivision": 110,
+    "Retail": 102,
+    "Industrial": 84,
+    "Other": 55,
+    "Education": 28,
+    "Healthcare": 10,
+    "Infrastructure": 8,
+    "Energy": 3
+  },
+  "by_filter_group": {
+    "Residential": 3436,
+    "Commercial": 295,
+    "Industrial": 84,
+    "Government": 38,
+    "Infrastructure": 11
+  },
+  "by_council": {
+    "Newcastle": {
+      "count": 856,
+      "value": 991028919
+    },
+    "Lake Macquarie": {
+      "count": 1286,
+      "value": 1203406597
+    },
+    "Port Stephens": {
+      "count": 365,
+      "value": 188376498
+    },
+    "Cessnock": {
+      "count": 576,
+      "value": 338194519
+    },
+    "Maitland": {
+      "count": 781,
+      "value": 495901067
+    }
+  },
+  "top_builders": [
+    {
+      "builder": "BLOC CONSTRUCTIONS (NSW) PTY LIMITED",
+      "jobs": 1,
+      "value": 233534640,
+      "councils": [
+        "Newcastle"
+      ]
+    },
+    {
+      "builder": "SOUTHERN CROSS ELECTRICAL ENGINEERING LIMITED",
+      "jobs": 1,
+      "value": 208000000,
+      "councils": [
+        "Newcastle"
+      ]
+    },
+    {
+      "builder": "GWH BUILD PTY LTD",
+      "jobs": 3,
+      "value": 109765381,
+      "councils": [
+        "Newcastle"
+      ]
+    },
+    {
+      "builder": "MULLANE CONSTRUCTION PLUMBING PTY LIMITED",
+      "jobs": 1,
+      "value": 39000000,
+      "councils": [
+        "Newcastle"
+      ]
+    },
+    {
+      "builder": "MAINBRACE CONSTRUCTIONS (NSW) PTY LTD",
+      "jobs": 1,
+      "value": 29259826,
+      "councils": [
+        "Lake Macquarie"
+      ]
+    },
+    {
+      "builder": "MCDONALD JONES HOMES",
+      "jobs": 30,
+      "value": 16157646,
+      "councils": [
+        "Cessnock",
+        "Lake Macquarie",
+        "Maitland",
+        "Port Stephens"
+      ]
+    },
+    {
+      "builder": "Graph Builders Pty Ltd",
+      "jobs": 3,
+      "value": 10335000,
+      "councils": [
+        "Lake Macquarie"
+      ]
+    },
+    {
+      "builder": "BROWN COMMERCIAL BUILDING PTY LIMITED",
+      "jobs": 3,
+      "value": 10082554,
+      "councils": [
+        "Lake Macquarie",
+        "Maitland",
+        "Newcastle"
+      ]
+    },
+    {
+      "builder": "MONTGOMERY HOMES PTY LTD",
+      "jobs": 14,
+      "value": 10044759,
+      "councils": [
+        "Cessnock",
+        "Lake Macquarie",
+        "Maitland",
+        "Newcastle",
+        "Port Stephens"
+      ]
+    },
+    {
+      "builder": "EDEN BRAE HOLDINGS PTY LIMITED",
+      "jobs": 21,
+      "value": 10016694,
+      "councils": [
+        "Cessnock",
+        "Lake Macquarie",
+        "Maitland",
+        "Newcastle"
+      ]
+    },
+    {
+      "builder": "MCDONALD JONES COMMUNITIES PTY LIMITED",
+      "jobs": 22,
+      "value": 7905491,
+      "councils": [
+        "Cessnock",
+        "Maitland"
+      ]
+    },
+    {
+      "builder": "MOJO HOMES PTY LIMITED",
+      "jobs": 11,
+      "value": 7812920,
+      "councils": [
+        "Cessnock",
+        "Lake Macquarie",
+        "Maitland",
+        "Newcastle",
+        "Port Stephens"
+      ]
+    },
+    {
+      "builder": "CLARENDON HOMES (NSW) PTY LTD",
+      "jobs": 9,
+      "value": 7445348,
+      "councils": [
+        "Cessnock",
+        "Lake Macquarie",
+        "Maitland"
+      ]
+    },
+    {
+      "builder": "The Trustee for Swing Factory Maitland Unit Trust",
+      "jobs": 1,
+      "value": 7047341,
+      "councils": [
+        "Maitland"
+      ]
+    },
+    {
+      "builder": "INTREC MANAGEMENT PTY LTD",
+      "jobs": 1,
+      "value": 6968448,
+      "councils": [
+        "Maitland"
+      ]
+    },
+    {
+      "builder": "A & A BUILDING SERVICES PTY LTD",
+      "jobs": 1,
+      "value": 6877901,
+      "councils": [
+        "Lake Macquarie"
+      ]
+    },
+    {
+      "builder": "DECODE CONSTRUCTION PTY LTD",
+      "jobs": 2,
+      "value": 6565956,
+      "councils": [
+        "Newcastle"
+      ]
+    },
+    {
+      "builder": "KINGSTON BUILDING PTY LTD",
+      "jobs": 1,
+      "value": 6322800,
+      "councils": [
+        "Lake Macquarie"
+      ]
+    },
+    {
+      "builder": "SMITH BROTHERS HOMES PTY LTD",
+      "jobs": 9,
+      "value": 5631508,
+      "councils": [
+        "Cessnock",
+        "Maitland",
+        "Newcastle",
+        "Port Stephens"
+      ]
+    },
+    {
+      "builder": "VOGUE HOMES NSW",
+      "jobs": 9,
+      "value": 5511392,
+      "councils": [
+        "Cessnock",
+        "Lake Macquarie"
+      ]
+    }
+  ],
+  "top_suburbs": [
+    {
+      "suburb": "Morisset Park",
+      "count": 7,
+      "value": 464213513
+    },
+    {
+      "suburb": "Newcastle West",
+      "count": 23,
+      "value": 364127109
+    },
+    {
+      "suburb": "Mayfield West",
+      "count": 22,
+      "value": 216168150
+    },
+    {
+      "suburb": "Address not supplied",
+      "count": 281,
+      "value": 153959869
+    },
+    {
+      "suburb": "Cessnock",
+      "count": 61,
+      "value": 119250880
+    },
+    {
+      "suburb": "Lochinvar",
+      "count": 101,
+      "value": 96642663
+    },
+    {
+      "suburb": "Chisholm",
+      "count": 122,
+      "value": 80972573
+    },
+    {
+      "suburb": "North Rothbury",
+      "count": 78,
+      "value": 61963443
+    },
+    {
+      "suburb": "Newcastle",
+      "count": 26,
+      "value": 53276613
+    },
+    {
+      "suburb": "Rutherford",
+      "count": 48,
+      "value": 51019469
+    },
+    {
+      "suburb": "Morisset",
+      "count": 21,
+      "value": 45330027
+    },
+    {
+      "suburb": "Booragul",
+      "count": 8,
+      "value": 43056486
+    },
+    {
+      "suburb": "Merewether",
+      "count": 70,
+      "value": 42373541
+    },
+    {
+      "suburb": "Edgeworth",
+      "count": 82,
+      "value": 42122491
+    },
+    {
+      "suburb": "Belmont North",
+      "count": 27,
+      "value": 41542200
+    }
+  ],
+  "quality": {
+    "cost_confidence": {
+      "high": 1623,
+      "medium": 1761,
+      "low": 353,
+      "suspect": 44,
+      "unverified": 12,
+      "unknown": 110
+    },
+    "suspect_records": [
+      {
+        "id": "TS-NEWC-863722",
+        "address": "40 King Street Adamstown 2289",
+        "declared": 61500000.0,
+        "flags": [
+          "large_cost_uncorroborated"
+        ]
+      },
+      {
+        "id": "TS-NEWC-959034",
+        "address": "124-126 Bull Street Newcastle West 2302",
+        "declared": 68585000.0,
+        "flags": [
+          "large_cost_uncorroborated"
+        ]
+      },
+      {
+        "id": "TS-PORT-971421",
+        "address": "38 Cabbage Tree Road Williamtown 2318",
+        "declared": 130202094.0,
+        "flags": [
+          "large_cost_uncorroborated"
+        ]
+      },
+      {
+        "id": "TS-NEWC-889406",
+        "address": "73 Railway Lane Wickham 2293",
+        "declared": 67750000.0,
+        "flags": [
+          "large_cost_uncorroborated"
+        ]
+      },
+      {
+        "id": "TS-NEWC-976144",
+        "address": "11 Mosbri Crescent the Hill 2300",
+        "declared": 118262924.0,
+        "flags": [
+          "large_cost_uncorroborated"
+        ]
+      },
+      {
+        "id": "TS-CESS-954592",
+        "address": "2/-/Dp1320669",
+        "declared": 37370000.0,
+        "flags": [
+          "large_cost_uncorroborated"
+        ]
+      },
+      {
+        "id": "TS-LAKE-1013695",
+        "address": "266 Newport Road Cooranbong 2265",
+        "declared": 2750000.0,
+        "flags": [
+          "cost_per_sqm_outlier:41,491"
+        ]
+      },
+      {
+        "id": "TS-NEWC-984761",
+        "address": "39 Scenic Drive Merewether 2291",
+        "declared": 7000000.0,
+        "flags": [
+          "cost_per_sqm_outlier:142,857",
+          "cost_per_dwelling_outlier:7,000,000"
+        ]
+      },
+      {
+        "id": "TS-NEWC-1010286",
+        "address": "50 Parkway Avenue Cooks Hill 2300",
+        "declared": 84000.0,
+        "flags": [
+          "cost_per_sqm_outlier:159"
+        ]
+      },
+      {
+        "id": "TS-NEWC-978430",
+        "address": "34 Mabel Street Georgetown 2298",
+        "declared": 35980.0,
+        "flags": [
+          "cost_per_dwelling_outlier:35,980"
+        ]
+      },
+      {
+        "id": "TS-LAKE-978495",
+        "address": "20 Gorokan Rd, Wyee NSW 2259",
+        "declared": 22500.0,
+        "flags": [
+          "cost_per_sqm_outlier:194"
+        ]
+      },
+      {
+        "id": "TS-CESS-381728",
+        "address": "145 Bishops Bridge Road Sawyers Gully 2326",
+        "declared": 458955953.0,
+        "flags": [
+          "large_cost_uncorroborated"
+        ]
+      },
+      {
+        "id": "TS-NEWC-655521",
+        "address": "63 Denison Street, Hamilton East",
+        "declared": 38000.0,
+        "flags": [
+          "cost_per_lot_outlier:2,923"
+        ]
+      },
+      {
+        "id": "TS-MAIT-999299",
+        "address": "134 Somerset Drive Thornton 2322",
+        "declared": 34925.0,
+        "flags": [
+          "cost_per_sqm_outlier:244"
+        ]
+      },
+      {
+        "id": "TS-LAKE-1029654",
+        "address": "6 Strawberry Terrace Glendale 2285",
+        "declared": 20000.0,
+        "flags": [
+          "cost_per_sqm_outlier:104",
+          "cost_per_dwelling_outlier:20,000"
+        ]
+      },
+      {
+        "id": "TS-CESS-648386",
+        "address": "509 De Beyers Road Pokolbin 2320",
+        "declared": 29977946.8,
+        "flags": [
+          "cost_per_dwelling_outlier:29,977,947"
+        ]
+      },
+      {
+        "id": "TS-LAKE-964017",
+        "address": "91 Wilkinson Road Martinsville 2265",
+        "declared": 7078015.0,
+        "flags": [
+          "cost_per_sqm_outlier:78,645"
+        ]
+      },
+      {
+        "id": "TS-LAKE-993030",
+        "address": "34 Ackland Way Wyee 2259",
+        "declared": 57359.0,
+        "flags": [
+          "cost_per_sqm_outlier:123"
+        ]
+      },
+      {
+        "id": "TS-MAIT-994184",
+        "address": "19 Pender Road South Maitland NSW 2320",
+        "declared": 39860.0,
+        "flags": [
+          "cost_per_sqm_outlier:152"
+        ]
+      },
+      {
+        "id": "TS-LAKE-972216",
+        "address": "33 Whistling Kite Circuit Murrays Beach 2281",
+        "declared": 687800.0,
+        "flags": [
+          "cost_per_sqm_outlier:241"
+        ]
+      },
+      {
+        "id": "TS-PORT-978202",
+        "address": "48 Yoolarai Crescent Nelson Bay 2315",
+        "declared": 1375000000.0,
+        "flags": [
+          "cost_per_sqm_outlier:2,894,737"
+        ]
+      },
+      {
+        "id": "TS-LAKE-1020877",
+        "address": "36 Milburn Circuit Boolaroo 2284",
+        "declared": 20059.6,
+        "flags": [
+          "cost_per_sqm_outlier:189",
+          "cost_per_dwelling_outlier:20,060"
+        ]
+      },
+      {
+        "id": "TS-NEWC-363514",
+        "address": "9 Richard Street Adamstown 2289",
+        "declared": 28886.0,
+        "flags": [
+          "cost_per_dwelling_outlier:14,443"
+        ]
+      },
+      {
+        "id": "TS-LAKE-374627",
+        "address": "13 Pokolbin Close Eleebana 2282",
+        "declared": 40000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:40,000"
+        ]
+      },
+      {
+        "id": "TS-LAKE-1024671",
+        "address": "9 Turnock Drive Cameron Park 2285",
+        "declared": 25000.0,
+        "flags": [
+          "cost_per_sqm_outlier:51"
+        ]
+      },
+      {
+        "id": "TS-LAKE-378837",
+        "address": "46 Pembroke Avenue Edgeworth 2285",
+        "declared": 21000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:21,000"
+        ]
+      },
+      {
+        "id": "TS-LAKE-365007",
+        "address": "41 Jones Avenue Warners Bay 2282",
+        "declared": 20000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:20,000"
+        ]
+      },
+      {
+        "id": "TS-NEWC-640075",
+        "address": "137 Croudace Road Elermore Vale 2287",
+        "declared": 32296500.0,
+        "flags": [
+          "large_cost_uncorroborated"
+        ]
+      },
+      {
+        "id": "TS-PORT-995149",
+        "address": "5 Burbong Street Nelson Bay 2315",
+        "declared": 167497.0,
+        "flags": [
+          "cost_per_sqm_outlier:225"
+        ]
+      },
+      {
+        "id": "TS-NEWC-669171",
+        "address": "U 1 468A Brunker Road Adamstown Heights 2289",
+        "declared": 56000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:56,000"
+        ]
+      },
+      {
+        "id": "TS-LAKE-989824",
+        "address": "32 Pillapai Road Brightwaters 2264",
+        "declared": 50000.0,
+        "flags": [
+          "cost_per_sqm_outlier:134"
+        ]
+      },
+      {
+        "id": "TS-NEWC-648109",
+        "address": "129 Scott Street Newcastle 2300",
+        "declared": 50000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:50,000"
+        ]
+      },
+      {
+        "id": "TS-NEWC-650269",
+        "address": "38 Emerald Street Hamilton North 2292",
+        "declared": 38000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:38,000"
+        ]
+      },
+      {
+        "id": "TS-NEWC-660956",
+        "address": "115 Crescent Road Waratah 2298",
+        "declared": 33000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:33,000"
+        ]
+      },
+      {
+        "id": "TS-LAKE-949746",
+        "address": "49 Seena Drive Edgeworth 2285",
+        "declared": 328928.0,
+        "flags": [
+          "cost_per_sqm_outlier:31"
+        ]
+      },
+      {
+        "id": "TS-LAKE-658575",
+        "address": "15 Alexander Avenue Caves Beach 2281",
+        "declared": 50000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:50,000"
+        ]
+      },
+      {
+        "id": "TS-LAKE-1011944",
+        "address": "62 Dora Street Dora Creek 2264",
+        "declared": 39000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:39,000"
+        ]
+      },
+      {
+        "id": "TS-MAIT-1019898",
+        "address": "69A Bolwarra Road Bolwarra 2320",
+        "declared": 30000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:30,000"
+        ]
+      },
+      {
+        "id": "TS-NEWC-645920",
+        "address": "13 Featherwood Way Fletcher 2287",
+        "declared": 25000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:25,000"
+        ]
+      },
+      {
+        "id": "TS-LAKE-370631",
+        "address": "26 John Street Dudley 2290",
+        "declared": 20000.0,
+        "flags": [
+          "cost_per_dwelling_outlier:20,000"
+        ]
+      }
+    ]
+  }
+}
