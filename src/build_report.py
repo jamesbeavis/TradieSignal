@@ -10,14 +10,14 @@ data/report_payload.json into two outputs from one body of markup:
 
 Design system
 -------------
-Palette   ink #0A1628 / navy #12293F / electric blue #0B6BF2 /
-          signal green #00E07A / paper #F6F8FB / rule #DDE4EE
+Palette   ink #10231A / navy #142D21 / electric blue #0E5A3A /
+          signal green #C6F04A / paper #F5F6F1 / rule #DDE3DB
           categorical (validated light+dark, fixed order):
           #1466E0 Residential, #E4681A Commercial, #C42A62 Industrial,
           #8A7A12 Government, #6F52CC Infrastructure
-          status (reserved, never a series): #00713F good, #8A5107 warn,
+          status (reserved, never a series): #0E5A3A good, #8A5107 warn,
           #A32A20 critical
-Type      Archivo (display) / IBM Plex Sans (body) / IBM Plex Mono (refs, data)
+Type      Schibsted Grotesk (display) / IBM Plex Sans (body) / IBM Plex Mono (refs, data)
 Layout    A worksite job sheet: navy masthead with a signal rule, a plain row
           of summary figures with tabular numerals, then ranked job cards with
           a priority stripe, a switchboard-style score block, and a call line.
@@ -29,6 +29,10 @@ import html
 import json
 from datetime import date
 from pathlib import Path
+
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from brand import apply_logo  # noqa: E402
 
 DATA = Path("data")
 OUT = Path("reports")
@@ -338,23 +342,23 @@ def compact_row(project: dict) -> str:
 # ---------------------------------------------------------------------------
 
 TOKENS_LIGHT = """
-  --ink:#0A1628; --ink-2:#243A56; --grey:#5A6B82; --grey-2:#8494A8;
-  --paper:#F6F8FB; --card:#FFFFFF; --rule:#DDE4EE; --rule-2:#EDF1F7;
-  --navy:#0F2338; --navy-2:#1B3A5A;
-  --blue:#0B6BF2; --blue-ink:#0A4FB4; --blue-wash:#EAF2FE;
-  --green:#00E07A; --green-ink:#00713F; --green-wash:#E4FAEF;
-  --good:#00713F; --warn:#8A5107; --warn-wash:#FDF3E3; --bad:#A32A20;
-  --on-navy:#EAF1FA; --on-navy-2:#9DB4CE;
+  --ink:#10231A; --ink-2:#2B4236; --grey:#56675E; --grey-2:#7D8C84;
+  --paper:#F5F6F1; --card:#FFFFFF; --rule:#DDE3DB; --rule-2:#EDF0EA;
+  --navy:#0B2A1E; --navy-2:#1C3E2E;
+  --blue:#0E5A3A; --blue-ink:#0E5A3A; --blue-wash:#E8F1EB;
+  --green:#C6F04A; --green-ink:#0E5A3A; --green-wash:#F1F9DC;
+  --good:#0E5A3A; --warn:#8A5107; --warn-wash:#FDF3E3; --bad:#A32A20;
+  --on-navy:#ECF1EA; --on-navy-2:#A3B8AA;
 """
 
 TOKENS_DARK = """
-  --ink:#E9EFF7; --ink-2:#BFCEDF; --grey:#93A5BA; --grey-2:#6E8299;
-  --paper:#080F1A; --card:#0F1B2B; --rule:#22344A; --rule-2:#17263A;
-  --navy:#0A1424; --navy-2:#16293F;
-  --blue:#5B9CFF; --blue-ink:#8FBEFF; --blue-wash:#12243D;
-  --green:#00E07A; --green-ink:#41E39A; --green-wash:#0B2A1D;
-  --good:#41E39A; --warn:#E0A458; --warn-wash:#2B2113; --bad:#F0796B;
-  --on-navy:#EAF1FA; --on-navy-2:#9DB4CE;
+  --ink:#EAEFE8; --ink-2:#C4D2C8; --grey:#97A89D; --grey-2:#6E7F75;
+  --paper:#09120D; --card:#111E17; --rule:#243A2E; --rule-2:#192A20;
+  --navy:#0B150F; --navy-2:#182D22;
+  --blue:#237A50; --blue-ink:#9FDDB5; --blue-wash:#142A1F;
+  --green:#C6F04A; --green-ink:#C6F04A; --green-wash:#1C2A0E;
+  --good:#C6F04A; --warn:#E0A458; --warn-wash:#2B2113; --bad:#F0796B;
+  --on-navy:#ECF1EA; --on-navy-2:#A3B8AA;
 """
 
 BASE_CSS = """
@@ -364,8 +368,8 @@ body{margin:0;background:var(--paper);color:var(--ink);
   font-family:"IBM Plex Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   font-size:15px;line-height:1.55;font-feature-settings:"kern" 1}
 .wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:0 64px}
-h1,h2,h3,h4{font-family:Archivo,"Arial Narrow",Helvetica,sans-serif;
-  text-wrap:balance;margin:0;letter-spacing:-.015em}
+h1,h2,h3,h4{font-family:Schibsted Grotesk,"Arial Narrow",Helvetica,sans-serif;
+  text-wrap:balance;margin:0;letter-spacing:-.01em}
 a{color:var(--blue-ink)}
 .mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
 .num{font-variant-numeric:tabular-nums}
@@ -375,11 +379,12 @@ a{color:var(--blue-ink)}
   border-bottom:3px solid var(--green)}
 .mast-in{max-width:1080px;margin:0 auto;padding-inline:20px}
 .brandline{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-family:Archivo,sans-serif;font-weight:800;font-size:26px;
+.logo{font-family:Schibsted Grotesk,sans-serif;font-weight:800;font-size:26px;
   letter-spacing:-.03em;color:#fff}
 .logo .sig{color:var(--green)}
+.logo{display:inline-flex;align-items:center;gap:.32em;letter-spacing:-.022em;line-height:1;white-space:nowrap}.logo .sig{font-size:inherit;margin:0;padding:0}.logo-mark{height:1.15em;width:auto;flex:none}
 .issue{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--on-navy-2);border:1px solid #2C4763;
+  text-transform:uppercase;color:var(--on-navy-2);border:1px solid #2E4A3C;
   border-radius:3px;padding:3px 8px}
 .mast h1{font-size:clamp(28px,5vw,44px);font-weight:800;color:#fff;
   margin-top:18px;line-height:1.05;max-width:22ch}
@@ -390,12 +395,12 @@ a{color:var(--blue-ink)}
 
 /* the summary strip: label/value pairs, not a row of shadowed cards */
 .strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:1px;background:#2C4763;margin-top:28px;
-  border-top:1px solid #2C4763;border-bottom:1px solid #2C4763}
+  gap:1px;background:#2E4A3C;margin-top:28px;
+  border-top:1px solid #2E4A3C;border-bottom:1px solid #2E4A3C}
 .strip>div{background:var(--navy);padding:16px 18px}
 .strip dt{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--on-navy-2);margin:0 0 6px}
-.strip dd{margin:0;font-family:Archivo,sans-serif;font-weight:700;font-size:25px;
+.strip dd{margin:0;font-family:Schibsted Grotesk,sans-serif;font-weight:700;font-size:25px;
   color:#fff;font-variant-numeric:tabular-nums;line-height:1.1}
 .strip dd small{display:block;font-family:"IBM Plex Sans",sans-serif;
   font-weight:400;font-size:11.5px;color:var(--on-navy-2);margin-top:5px;
@@ -427,7 +432,7 @@ section{margin-top:52px}
   align-items:baseline;gap:0 7px;min-width:104px;
   border:1px solid var(--rule);border-radius:2px;padding:7px 10px 8px;
   background:var(--paper)}
-.score-num{font-family:Archivo,sans-serif;font-weight:800;font-size:27px;
+.score-num{font-family:Schibsted Grotesk,sans-serif;font-weight:800;font-size:27px;
   line-height:1;font-variant-numeric:tabular-nums}
 .score-cap{font-family:"IBM Plex Mono",monospace;font-size:9.5px;
   letter-spacing:.14em;text-transform:uppercase;color:var(--grey-2)}
@@ -513,7 +518,7 @@ tbody tr:last-child td{border-bottom:0}
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:24px}
 .chart{margin:0}
 .chart figcaption{margin-bottom:12px}
-.chart-title{display:block;font-family:Archivo,sans-serif;font-weight:700;font-size:15px}
+.chart-title{display:block;font-family:Schibsted Grotesk,sans-serif;font-weight:700;font-size:15px}
 .chart-sub{display:block;color:var(--grey);font-size:13px;margin-top:3px;max-width:52ch}
 .chart-svg{width:100%;height:auto;display:block;overflow:visible}
 .chart-wide{max-width:660px}
@@ -532,7 +537,7 @@ tbody tr:last-child td{border-bottom:0}
 .pub-top{display:flex;justify-content:space-between;gap:16px;align-items:baseline;
   flex-wrap:wrap}
 .pub-item h3{font-size:17px;font-weight:700;max-width:46ch}
-.pub-val{font-family:Archivo,sans-serif;font-weight:700;font-size:19px;
+.pub-val{font-family:Schibsted Grotesk,sans-serif;font-weight:700;font-size:19px;
   color:var(--blue-ink);font-variant-numeric:tabular-nums;white-space:nowrap}
 .pub-meta{display:flex;gap:8px 16px;flex-wrap:wrap;margin-top:6px;font-size:12.5px;
   color:var(--grey)}
@@ -573,7 +578,7 @@ PRINT_CSS = """
 html{font-size:10.2pt}
 body{background:#fff;font-size:9.6pt;line-height:1.45}
 .wrap{max-width:none;padding-inline:0;padding-block:0}
-.mast{margin-bottom:0;padding-block:0 0;border-bottom:3px solid #00B366}
+.mast{margin-bottom:0;padding-block:0 0;border-bottom:3px solid #0E5A3A}
 .mast-in{padding-inline:0;padding-block:9mm 0}
 .strip{margin-top:9mm}
 .strip>div{padding:9px 11px}
@@ -583,7 +588,7 @@ body{background:#fff;font-size:9.6pt;line-height:1.45}
 .mast .dek{font-size:10.5pt}
 section{margin-top:9mm;page-break-inside:auto}
 .sec-head{page-break-after:avoid}
-.card{page-break-inside:avoid;border:1px solid #DDE4EE;border-left:4px solid var(--cat);
+.card{page-break-inside:avoid;border:1px solid #DDE3DB;border-left:4px solid var(--cat);
   margin:0}
 .cards{gap:5mm}
 .pub-item{page-break-inside:avoid}
@@ -593,7 +598,7 @@ thead{display:table-header-group}
 tr{page-break-inside:avoid}
 .tbl-wrap{overflow:visible}
 .pagebreak{page-break-before:always;break-before:page}
-a{color:#0A4FB4;text-decoration:none}
+a{color:#0E5A3A;text-decoration:none}
 .no-print{display:none!important}
 /* Restore the two-column card body: the phone breakpoint must not apply to A4. */
 .cols{grid-template-columns:1fr 1fr!important;gap:14px!important}
@@ -621,7 +626,7 @@ FONT_LINK = (
     '<link rel="preconnect" href="https://fonts.googleapis.com">'
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
     '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-    "family=Archivo:wght@600;700;800&"
+    "family=Schibsted+Grotesk:wght@500;600;700;800&"
     "family=IBM+Plex+Mono:wght@400;500;600&"
     "family=IBM+Plex+Sans:wght@400;500;600;700&display=swap\">"
 )
@@ -658,7 +663,7 @@ def render_body(p: dict, for_print: bool) -> str:
 <header class="mast">
   <div class="mast-in">
     <div class="brandline">
-      <span class="logo">Tradie<span class="sig">signal</span></span>
+      %%LOGO%%
       <span class="issue">Issue {p["issue"]:02d} · {e(short_date(p["generated"]))} {e(p["generated"][:4])}</span>
     </div>
     <h1>Hunter Electrical Opportunity Report</h1>
@@ -1013,8 +1018,8 @@ def render(p: dict, for_print: bool) -> str:
 def main() -> None:
     payload = json.loads((DATA / "report_payload.json").read_text(encoding="utf-8"))
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "report_print.html").write_text(render(payload, True), encoding="utf-8")
-    (OUT / "report_web.html").write_text(render(payload, False), encoding="utf-8")
+    (OUT / "report_print.html").write_text(apply_logo(render(payload, True)), encoding="utf-8")
+    (OUT / "report_web.html").write_text(apply_logo(render(payload, False)), encoding="utf-8")
     for name in ("report_print.html", "report_web.html"):
         size = (OUT / name).stat().st_size
         print(f"wrote reports/{name}  ({size:,} bytes)")

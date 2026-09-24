@@ -17,6 +17,10 @@ import html
 import json
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from brand import apply_logo  # noqa: E402
+
 DATA = Path("data")
 OUT = Path("site")
 
@@ -78,16 +82,16 @@ def hero_map(projects: list[dict]) -> str:
         x, y = xy(p)
         dots.append(
             f'<circle cx="{x:.1f}" cy="{y:.1f}" r="2.5" '
-            f'fill="{CAT_COLORS.get(p["filter_group"], "#1466E0")}" opacity=".62"/>'
+            f'fill="#7FA890" opacity=".5"/>'
         )
     marks = []
     for p in highlight:
         x, y = xy(p)
         r = 4.5 if (p.get("cost") or 0) < 10_000_000 else 7.5
         marks.append(
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r + 3.5:.1f}" fill="#00E07A" opacity=".22"/>'
-            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="#00E07A" '
-            f'stroke="#04121F" stroke-width="1.6"/>'
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r + 3.5:.1f}" fill="#C6F04A" opacity=".22"/>'
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="#C6F04A" '
+            f'stroke="#0B2A1E" stroke-width="1.6"/>'
         )
 
     return (
@@ -268,33 +272,33 @@ HOW = [
 
 CSS = """
 :root{
-  --ink:#0A1628; --ink-2:#243A56; --grey:#5A6B82; --grey-2:#8494A8;
-  --paper:#FFFFFF; --paper-2:#F4F7FB; --card:#FFFFFF;
-  --rule:#DCE3ED; --rule-2:#EDF1F7;
-  --navy:#04121F; --navy-2:#0D2438; --navy-3:#173A57;
-  --blue:#0B6BF2; --blue-ink:#0A4FB4; --blue-wash:#EAF2FE;
-  --green:#00E07A; --green-ink:#00713F; --green-wash:#E4FAEF;
-  --on-navy:#EDF3FA; --on-navy-2:#93AEC9;
-  --shadow:0 1px 2px rgba(10,22,40,.06),0 8px 24px rgba(10,22,40,.07);
+  --ink:#10231A; --ink-2:#2B4236; --grey:#56675E; --grey-2:#7D8C84;
+  --paper:#FFFFFF; --paper-2:#F5F6F1; --card:#FFFFFF;
+  --rule:#DDE3DB; --rule-2:#EDF0EA;
+  --navy:#0B2A1E; --navy-2:#0F3827; --navy-3:#1A4D37;
+  --blue:#0E5A3A; --blue-ink:#0E5A3A; --blue-wash:#E8F1EB;
+  --green:#C6F04A; --green-ink:#0E5A3A; --green-wash:#F1F9DC;
+  --on-navy:#F1F5EE; --on-navy-2:#A9BFB2;
+  --shadow:0 1px 2px rgba(16,35,26,.06),0 8px 24px rgba(16,35,26,.07);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --ink:#EAF0F8; --ink-2:#C2D0E1; --grey:#94A6BB; --grey-2:#70849B;
-  --paper:#070E18; --paper-2:#0C1520; --card:#101C2C;
-  --rule:#22344A; --rule-2:#18283C;
-  --navy:#04101C; --navy-2:#0A1A29; --navy-3:#15334D;
-  --blue:#5B9CFF; --blue-ink:#8FBEFF; --blue-wash:#122540;
-  --green:#00E07A; --green-ink:#41E39A; --green-wash:#0B2A1D;
-  --on-navy:#EDF3FA; --on-navy-2:#93AEC9;
+  --ink:#EDF2EC; --ink-2:#C4D2C8; --grey:#9DB0A4; --grey-2:#7A8D81;
+  --paper:#08110C; --paper-2:#0D1812; --card:#12211A;
+  --rule:#243A2E; --rule-2:#1A2C22;
+  --navy:#06100B; --navy-2:#0C1D15; --navy-3:#1A3A2A;
+  --blue:#237A50; --blue-ink:#9FDDB5; --blue-wash:#13291E;
+  --green:#C6F04A; --green-ink:#C6F04A; --green-wash:#1C2A0E;
+  --on-navy:#F1F5EE; --on-navy-2:#A9BFB2;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.34);
 }}
 :root[data-theme="dark"]{
-  --ink:#EAF0F8; --ink-2:#C2D0E1; --grey:#94A6BB; --grey-2:#70849B;
-  --paper:#070E18; --paper-2:#0C1520; --card:#101C2C;
-  --rule:#22344A; --rule-2:#18283C;
-  --navy:#04101C; --navy-2:#0A1A29; --navy-3:#15334D;
-  --blue:#5B9CFF; --blue-ink:#8FBEFF; --blue-wash:#122540;
-  --green:#00E07A; --green-ink:#41E39A; --green-wash:#0B2A1D;
-  --on-navy:#EDF3FA; --on-navy-2:#93AEC9;
+  --ink:#EDF2EC; --ink-2:#C4D2C8; --grey:#9DB0A4; --grey-2:#7A8D81;
+  --paper:#08110C; --paper-2:#0D1812; --card:#12211A;
+  --rule:#243A2E; --rule-2:#1A2C22;
+  --navy:#06100B; --navy-2:#0C1D15; --navy-3:#1A3A2A;
+  --blue:#237A50; --blue-ink:#9FDDB5; --blue-wash:#13291E;
+  --green:#C6F04A; --green-ink:#C6F04A; --green-wash:#1C2A0E;
+  --on-navy:#F1F5EE; --on-navy-2:#A9BFB2;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.34);
 }
 
@@ -302,8 +306,8 @@ CSS = """
 body{margin:0;background:var(--paper);color:var(--ink);
   font-family:"IBM Plex Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:Archivo,"Arial Narrow",Helvetica,sans-serif;margin:0;
-  text-wrap:balance;letter-spacing:-.02em;line-height:1.12}
+h1,h2,h3,h4{font-family:Schibsted Grotesk,"Arial Narrow",Helvetica,sans-serif;margin:0;
+  text-wrap:balance;letter-spacing:-.01em;line-height:1.12}
 p{margin:0}
 a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
@@ -316,22 +320,23 @@ a{color:inherit}
   border-bottom:1px solid var(--navy-3)}
 .nav-in{max-width:1120px;margin:0 auto;padding:13px 20px;display:flex;
   align-items:center;gap:18px;flex-wrap:wrap}
-.logo{font-family:Archivo,sans-serif;font-weight:800;font-size:21px;color:#fff;
+.logo{font-family:Schibsted Grotesk,sans-serif;font-weight:800;font-size:21px;color:#fff;
   letter-spacing:-.03em;white-space:nowrap}
 .logo .sig{color:var(--green)}
+.logo{display:inline-flex;align-items:center;gap:.32em;letter-spacing:-.022em;line-height:1;white-space:nowrap}.logo .sig{font-size:inherit;margin:0;padding:0}.logo-mark{height:1.15em;width:auto;flex:none}
 .nav-links{display:flex;gap:20px;margin-left:auto;font-size:14px;flex-wrap:wrap}
 .nav-links a{color:var(--on-navy-2);text-decoration:none}
 .nav-links a:hover,.nav-links a:focus-visible{color:#fff}
 .nav .btn{margin-left:4px}
 
 /* ---------------- buttons ---------------- */
-.btn{display:inline-block;font-family:Archivo,sans-serif;font-weight:700;
+.btn{display:inline-block;font-family:Schibsted Grotesk,sans-serif;font-weight:700;
   font-size:15px;padding:12px 22px;border-radius:3px;text-decoration:none;
   border:2px solid transparent;cursor:pointer;transition:transform .12s ease}
 .btn:active{transform:translateY(1px)}
-.btn-go{background:var(--green);color:#04121F}
-.btn-go:hover{background:#28EE93}
-.btn-line{border-color:#2E4E6B;color:var(--on-navy)}
+.btn-go{background:var(--green);color:#0B2A1E}
+.btn-go:hover{background:#D4F76B}
+.btn-line{border-color:#2F5A45;color:var(--on-navy)}
 .btn-line:hover{border-color:var(--green);color:#fff}
 .btn-blue{background:var(--blue);color:#fff}
 .btn-sm{font-size:13.5px;padding:9px 16px}
@@ -345,8 +350,8 @@ a{color:inherit}
   -webkit-mask-image:linear-gradient(96deg,transparent 6%,rgba(0,0,0,.3) 26%,#000 50%,#000 100%);
   mask-image:linear-gradient(96deg,transparent 6%,rgba(0,0,0,.3) 26%,#000 50%,#000 100%)}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(96deg,var(--navy) 0%,rgba(4,18,31,.94) 22%,
-    rgba(4,18,31,.5) 40%,rgba(4,18,31,.18) 62%,rgba(4,18,31,.4) 100%)}
+  background:linear-gradient(96deg,var(--navy) 0%,rgba(11,42,30,.94) 22%,
+    rgba(11,42,30,.5) 40%,rgba(11,42,30,.18) 62%,rgba(11,42,30,.4) 100%)}
 .hero-in{position:relative;z-index:2;max-width:1120px;margin:0 auto;
   padding:74px 20px 86px;display:grid;grid-template-columns:1.05fr .95fr;
   gap:52px;align-items:center}
@@ -361,15 +366,15 @@ a{color:inherit}
 .hero-proof div{min-width:0}
 .hero-proof dt{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
   color:var(--on-navy-2);margin-bottom:5px}
-.hero-proof dd{margin:0;font-family:Archivo,sans-serif;font-weight:700;
+.hero-proof dd{margin:0;font-family:Schibsted Grotesk,sans-serif;font-weight:700;
   font-size:23px;color:#fff;font-variant-numeric:tabular-nums;line-height:1}
 .maplegend{margin-top:22px;font-size:12px;color:var(--on-navy-2);
   display:flex;align-items:center;gap:9px}
 .maplegend i{width:9px;height:9px;border-radius:50%;background:var(--green);
-  flex:none;box-shadow:0 0 0 4px rgba(0,224,122,.18)}
+  flex:none;box-shadow:0 0 0 4px rgba(198,240,74,.18)}
 
 /* the live card sitting in the hero */
-.livecard{background:rgba(9,26,43,.97);backdrop-filter:blur(3px);border:1px solid var(--navy-3);border-radius:4px;
+.livecard{background:rgba(12,36,26,.97);backdrop-filter:blur(3px);border:1px solid var(--navy-3);border-radius:4px;
   padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
 .live-tag{display:flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;
   font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
@@ -382,7 +387,7 @@ a{color:inherit}
   color:var(--on-navy-2);margin-bottom:3px}
 .live-grid dd{margin:0;font-weight:600;font-size:17px;color:#fff;
   font-variant-numeric:tabular-nums}
-.live-builder{margin-top:16px;padding:12px 14px;background:rgba(0,224,122,.09);
+.live-builder{margin-top:16px;padding:12px 14px;background:rgba(198,240,74,.09);
   border-left:3px solid var(--green)}
 .live-builder span{display:block;font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;color:var(--green);margin-bottom:3px}
@@ -426,7 +431,7 @@ section{padding-block:74px}
 .f-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .f-chip{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
   color:#fff;background:var(--chip);padding:3px 8px;border-radius:2px}
-.f-score{font-family:Archivo,sans-serif;font-weight:800;font-size:26px;
+.f-score{font-family:Schibsted Grotesk,sans-serif;font-weight:800;font-size:26px;
   line-height:1;color:var(--green-ink);font-variant-numeric:tabular-nums;
   display:flex;align-items:baseline;gap:5px}
 .f-score i{font-family:"IBM Plex Mono",monospace;font-style:normal;font-size:9.5px;
@@ -473,7 +478,7 @@ section{padding-block:74px}
 .price-for{font-size:13.5px;color:var(--grey);margin-top:7px;min-height:40px}
 .price-amt{display:flex;align-items:baseline;gap:5px;margin-top:18px;
   padding-bottom:20px;border-bottom:1px solid var(--rule)}
-.price-amt b{font-family:Archivo,sans-serif;font-weight:800;font-size:44px;
+.price-amt b{font-family:Schibsted Grotesk,sans-serif;font-weight:800;font-size:44px;
   line-height:1;font-variant-numeric:tabular-nums}
 .price-amt span{color:var(--grey);font-size:14px}
 .price ul{margin:20px 0 0;padding:0;list-style:none;font-size:14.5px;flex:1}
@@ -520,7 +525,7 @@ section{padding-block:74px}
 /* ---------------- faq ---------------- */
 .faq{margin-top:36px;border-top:1px solid var(--rule)}
 details{border-bottom:1px solid var(--rule)}
-summary{cursor:pointer;padding:19px 0;font-family:Archivo,sans-serif;font-weight:700;
+summary{cursor:pointer;padding:19px 0;font-family:Schibsted Grotesk,sans-serif;font-weight:700;
   font-size:17px;list-style:none;display:flex;justify-content:space-between;
   align-items:center;gap:18px}
 summary::-webkit-details-marker{display:none}
@@ -564,7 +569,7 @@ details p{padding:0 0 20px;font-size:15px;color:var(--ink-2);max-width:76ch}
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-         'family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&'
+         'family=Schibsted+Grotesk:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&'
          'family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">')
 
 
@@ -602,7 +607,7 @@ def build() -> str:
 
     nav = """
 <nav class="nav"><div class="nav-in">
-  <span class="logo">Tradie<span class="sig">signal</span></span>
+  %%LOGO%%
   <div class="nav-links">
     <a href="#problem">The problem</a>
     <a href="#live">This week</a>
@@ -634,7 +639,7 @@ def build() -> str:
         <div><dt>Councils covered</dt><dd class="num">5</dd></div>
       </dl>
       <p class="maplegend"><i></i>Every dot behind this is a real project we are tracking
-        right now. The green ones are this fortnight's highest scores.</p>
+        right now. The bright green ones are this fortnight's highest scores.</p>
     </div>
     <div class="livecard">
       <span class="live-tag"><i></i>Live in the dashboard today</span>
@@ -877,7 +882,7 @@ def build() -> str:
     foot = f"""
 <footer class="foot"><div class="foot-in">
   <div>
-    <span class="logo" style="font-size:18px">Tradie<span class="sig">signal</span></span>
+    %%LOGO|font-size:18px%%
     <p style="margin-top:10px">Construction opportunity intelligence for Hunter
       electricians. Newcastle, NSW.</p>
   </div>
@@ -903,7 +908,7 @@ def build() -> str:
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     page = build()
-    (OUT / "landing.html").write_text(page, encoding="utf-8")
+    (OUT / "landing.html").write_text(apply_logo(page), encoding="utf-8")
     print(f"wrote site/landing.html ({len(page):,} bytes)")
 
 

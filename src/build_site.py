@@ -31,12 +31,11 @@ SITE = Path("site")
 REPORTS = Path("reports")
 OUT = Path("deploy")
 
-# Inlined so the pages have zero external asset dependencies.
-FAVICON = (
-    "data:image/svg+xml,%3Csvg xmlns='http://www3.org/2000/svg' viewBox='0 0 32 32'%3E"
-    "%3Crect width='32' height='32' rx='6' fill='%230A1628'/%3E"
-    "%3Cpath d='M17.5 4 9 18h5.5L13 28l9-14h-5.5L17.5 4z' fill='%2300E07A'/%3E%3C/svg%3E"
-).replace("www3.org", "www.w3.org")
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from brand import FAVICON, mark_svg  # noqa: E402  (favicon is inlined: no extra request)
+
+BRAND = Path("brand")
 
 PAGES = {
     "index.html": {
@@ -81,10 +80,15 @@ SHELL = """<!doctype html>
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="https://{domain}{path}">
 <meta property="og:locale" content="en_AU">
+<meta property="og:image" content="https://{domain}/brand/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Tradiesignal: council approvals turned into weekly leads for Hunter electricians">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://{domain}/brand/og-image.png">
 <meta name="twitter:title" content="{ogtitle}">
 <meta name="twitter:description" content="{desc}">
-<meta name="theme-color" content="#0A1628">
+<meta name="theme-color" content="#0B2A1E">
 <link rel="icon" href="{favicon}">
 <style>
   /* The Artifact host supplies a reset; standalone pages need their own. */
@@ -185,40 +189,41 @@ def rewire_ctas(html: str, checkout_url: str) -> str:
 # A forwarded sample report is how this spreads through a trade group. Whoever
 # opens it must be able to get back to the site and sign up without hunting.
 REPORT_BAR = """
-<div style="background:#0A1628;color:#EDF3FA;font-family:'IBM Plex Sans',system-ui,sans-serif;
+<div style="background:#0B2A1E;color:#F1F5EE;font-family:'IBM Plex Sans',system-ui,sans-serif;
   padding:11px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-  border-bottom:2px solid #00E07A">
-  <a href="/" style="font-family:Archivo,sans-serif;font-weight:800;font-size:18px;
-    color:#fff;text-decoration:none;letter-spacing:-.03em">Tradie<span style="color:#00E07A">signal</span></a>
-  <span style="font-size:12.5px;color:#93AEC9">Sample issue &middot; free to read and share</span>
+  border-bottom:2px solid #C6F04A">
+  <a href="/" aria-label="Tradiesignal home" style="display:inline-flex;align-items:center;gap:.32em;
+    font-family:Schibsted Grotesk,sans-serif;font-weight:800;font-size:18px;line-height:1;
+    color:#fff;text-decoration:none;letter-spacing:-.022em">{mark}<span aria-hidden="true">tradie<span style="color:#C6F04A">signal</span></span></a>
+  <span style="font-size:12.5px;color:#A9BFB2">Sample issue &middot; free to read and share</span>
   <span id="report-fresh" data-generated="{generated}"
-    style="font-size:12.5px;color:#93AEC9"></span>
+    style="font-size:12.5px;color:#A9BFB2"></span>
   <span style="margin-left:auto;display:flex;gap:9px;flex-wrap:wrap">
     <a href="/Tradiesignal-Hunter-Report.pdf" download
-       style="font-size:13.5px;padding:8px 14px;border:1px solid #2E4E6B;border-radius:3px;
-       color:#EDF3FA;text-decoration:none">Download PDF</a>
+       style="font-size:13.5px;padding:8px 14px;border:1px solid #2F5A45;border-radius:3px;
+       color:#F1F5EE;text-decoration:none">Download PDF</a>
     <a href="{checkout}" style="font-size:13.5px;font-weight:700;padding:8px 16px;
-       background:#00E07A;color:#04121F;border-radius:3px;text-decoration:none">Start free trial</a>
+       background:#C6F04A;color:#0B2A1E;border-radius:3px;text-decoration:none">Start free trial</a>
   </span>
 </div>"""
 
 REPORT_FOOT = """
-<div style="background:#0A1628;color:#EDF3FA;font-family:'IBM Plex Sans',system-ui,sans-serif;
-  padding:44px 20px;text-align:center;border-top:3px solid #00E07A">
-  <h2 style="font-family:Archivo,sans-serif;font-weight:800;font-size:27px;color:#fff;
+<div style="background:#0B2A1E;color:#F1F5EE;font-family:'IBM Plex Sans',system-ui,sans-serif;
+  padding:44px 20px;text-align:center;border-top:3px solid #C6F04A">
+  <h2 style="font-family:Schibsted Grotesk,sans-serif;font-weight:800;font-size:27px;color:#fff;
     margin:0 auto;max-width:22ch;line-height:1.15">You just read a fortnight of the Hunter's construction pipeline.</h2>
-  <p style="margin:16px auto 0;max-width:52ch;color:#93AEC9;font-size:16px;line-height:1.55">
+  <p style="margin:16px auto 0;max-width:52ch;color:#A9BFB2;font-size:16px;line-height:1.55">
     This lands in your inbox every Monday at 6am, filtered to your patch and your
     sectors. Fourteen days free, no card, cancel by replying to any email.</p>
   <div style="margin-top:24px;display:flex;gap:11px;justify-content:center;flex-wrap:wrap">
-    <a href="{checkout}" style="font-family:Archivo,sans-serif;font-weight:700;font-size:15px;
-      padding:12px 24px;background:#00E07A;color:#04121F;border-radius:3px;
+    <a href="{checkout}" style="font-family:Schibsted Grotesk,sans-serif;font-weight:700;font-size:15px;
+      padding:12px 24px;background:#C6F04A;color:#0B2A1E;border-radius:3px;
       text-decoration:none">Start free trial</a>
-    <a href="/" style="font-family:Archivo,sans-serif;font-weight:700;font-size:15px;
-      padding:12px 24px;border:2px solid #2E4E6B;color:#EDF3FA;border-radius:3px;
+    <a href="/" style="font-family:Schibsted Grotesk,sans-serif;font-weight:700;font-size:15px;
+      padding:12px 24px;border:2px solid #2F5A45;color:#F1F5EE;border-radius:3px;
       text-decoration:none">How it works</a>
   </div>
-  <p style="margin-top:22px;font-size:12.5px;color:#93AEC9">
+  <p style="margin-top:22px;font-size:12.5px;color:#A9BFB2">
     Know a sparky who'd use this? Forward it &mdash; if they subscribe you both get a month free.</p>
 </div>"""
 
@@ -257,6 +262,10 @@ def build(domain: str, checkout_url: str) -> None:
         shutil.rmtree(OUT)
     OUT.mkdir(parents=True)
 
+    # Logo files, profile photos and the link-preview image, served at /brand/.
+    if BRAND.exists():
+        shutil.copytree(BRAND, OUT / "brand")
+
     import json
     payload_path = Path("data/report_payload.json")
     generated = (
@@ -271,7 +280,8 @@ def build(domain: str, checkout_url: str) -> None:
         if meta["src"].name == "landing.html":
             body = add_demo_link(rewire_ctas(body, checkout_url))
         elif meta["src"].name == "report_web.html":
-            body = (REPORT_BAR.format(checkout=checkout_url, generated=generated)
+            body = (REPORT_BAR.format(checkout=checkout_url, generated=generated,
+                                      mark=mark_svg("#C6F04A", style="height:1.15em;width:auto;flex:none"))
                     + body
                     + REPORT_FOOT.format(checkout=checkout_url)
                     + FRESHNESS_JS)

@@ -21,6 +21,10 @@ import html
 import json
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from brand import apply_logo  # noqa: E402
+
 DATA = Path("data")
 OUT = Path("site")
 
@@ -78,30 +82,30 @@ def row_for(p: dict) -> list:
 
 CSS = """
 :root{
-  --ink:#0A1628; --ink-2:#28405E; --grey:#5A6B82; --grey-2:#8494A8;
-  --app:#EEF2F7; --card:#FFFFFF; --rule:#D9E1EC; --rule-2:#EAEFF6;
-  --navy:#0A1B2B; --navy-2:#15334D;
-  --blue:#0B6BF2; --blue-ink:#0A4FB4; --blue-wash:#E9F2FE;
-  --green:#00E07A; --green-ink:#00713F; --green-wash:#E3FAEE;
+  --ink:#10231A; --ink-2:#2A4236; --grey:#56675E; --grey-2:#7D8C84;
+  --app:#EEF1EB; --card:#FFFFFF; --rule:#DBE1D8; --rule-2:#EBEFE8;
+  --navy:#0C1C14; --navy-2:#1A3A2A;
+  --blue:#0E5A3A; --blue-ink:#0E5A3A; --blue-wash:#E8F1EB;
+  --green:#C6F04A; --green-ink:#0E5A3A; --green-wash:#F1F9DC;
   --warn:#8A5107; --warn-wash:#FDF3E3;
-  --on-navy:#EDF3FA; --on-navy-2:#93AEC9;
-  --shadow:0 1px 2px rgba(10,22,40,.07),0 6px 20px rgba(10,22,40,.08);
+  --on-navy:#F1F5EE; --on-navy-2:#A9BFB2;
+  --shadow:0 1px 2px rgba(16,35,26,.07),0 6px 20px rgba(16,35,26,.08);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --ink:#E9EFF7; --ink-2:#C0CEE0; --grey:#93A5BA; --grey-2:#6E8299;
-  --app:#070E18; --card:#101C2C; --rule:#22344A; --rule-2:#18283C;
-  --navy:#050F1B; --navy-2:#14304A;
-  --blue:#5B9CFF; --blue-ink:#8FBEFF; --blue-wash:#122540;
-  --green:#00E07A; --green-ink:#41E39A; --green-wash:#0B2A1D;
+  --ink:#EAEFE8; --ink-2:#C4D2C8; --grey:#97A89D; --grey-2:#6E7F75;
+  --app:#08110C; --card:#12211A; --rule:#243A2E; --rule-2:#1A2C22;
+  --navy:#07100B; --navy-2:#173828;
+  --blue:#237A50; --blue-ink:#9FDDB5; --blue-wash:#13291E;
+  --green:#C6F04A; --green-ink:#C6F04A; --green-wash:#1C2A0E;
   --warn:#E0A458; --warn-wash:#2B2113;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
 }}
 :root[data-theme="dark"]{
-  --ink:#E9EFF7; --ink-2:#C0CEE0; --grey:#93A5BA; --grey-2:#6E8299;
-  --app:#070E18; --card:#101C2C; --rule:#22344A; --rule-2:#18283C;
-  --navy:#050F1B; --navy-2:#14304A;
-  --blue:#5B9CFF; --blue-ink:#8FBEFF; --blue-wash:#122540;
-  --green:#00E07A; --green-ink:#41E39A; --green-wash:#0B2A1D;
+  --ink:#EAEFE8; --ink-2:#C4D2C8; --grey:#97A89D; --grey-2:#6E7F75;
+  --app:#08110C; --card:#12211A; --rule:#243A2E; --rule-2:#1A2C22;
+  --navy:#07100B; --navy-2:#173828;
+  --blue:#237A50; --blue-ink:#9FDDB5; --blue-wash:#13291E;
+  --green:#C6F04A; --green-ink:#C6F04A; --green-wash:#1C2A0E;
   --warn:#E0A458; --warn-wash:#2B2113;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
 }
@@ -110,8 +114,8 @@ CSS = """
 body{margin:0;background:var(--app);color:var(--ink);
   font-family:"IBM Plex Sans","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   font-size:14px;line-height:1.5}
-h1,h2,h3,h4{font-family:Archivo,"Arial Narrow",Helvetica,sans-serif;margin:0;
-  letter-spacing:-.015em;text-wrap:balance}
+h1,h2,h3,h4{font-family:Schibsted Grotesk,"Arial Narrow",Helvetica,sans-serif;margin:0;
+  letter-spacing:-.01em;text-wrap:balance}
 p{margin:0}
 button,select,input{font:inherit;color:inherit}
 .num{font-variant-numeric:tabular-nums}
@@ -122,11 +126,12 @@ button,select,input{font:inherit;color:inherit}
   position:sticky;top:0;z-index:30}
 .top-in{max-width:1400px;margin:0 auto;padding:12px 18px;display:flex;
   align-items:center;gap:14px;flex-wrap:wrap}
-.logo{font-family:Archivo,sans-serif;font-weight:800;font-size:19px;color:#fff;
+.logo{font-family:Schibsted Grotesk,sans-serif;font-weight:800;font-size:19px;color:#fff;
   letter-spacing:-.03em;white-space:nowrap}
 .logo .sig{color:var(--green)}
+.logo{display:inline-flex;align-items:center;gap:.32em;letter-spacing:-.022em;line-height:1;white-space:nowrap}.logo .sig{font-size:inherit;margin:0;padding:0}.logo-mark{height:1.15em;width:auto;flex:none}
 .top-tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--on-navy-2);border:1px solid #2A4964;
+  text-transform:uppercase;color:var(--on-navy-2);border:1px solid #2C4A3B;
   padding:3px 8px;border-radius:3px}
 .top-right{margin-left:auto;font-size:12.5px;color:var(--on-navy-2);
   display:flex;align-items:center;gap:8px}
@@ -147,7 +152,7 @@ button,select,input{font:inherit;color:inherit}
   padding:14px 16px}
 .stat dt{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
   color:var(--grey-2);margin-bottom:6px}
-.stat dd{margin:0;font-family:Archivo,sans-serif;font-weight:700;font-size:25px;
+.stat dd{margin:0;font-family:Schibsted Grotesk,sans-serif;font-weight:700;font-size:25px;
   line-height:1.05;font-variant-numeric:tabular-nums}
 .stat dd small{display:block;font-family:"IBM Plex Sans",sans-serif;font-weight:400;
   font-size:11.5px;color:var(--grey);margin-top:5px;letter-spacing:0}
@@ -221,7 +226,7 @@ tr[data-prio="high"] .scorepill span i{background:var(--green-ink)}
 .c-builder{font-size:12.5px;color:var(--ink-2);max-width:190px}
 .c-builder.none{color:var(--grey-2)}
 .empty{padding:52px 20px;text-align:center;color:var(--grey)}
-.empty strong{display:block;font-family:Archivo,sans-serif;font-size:17px;
+.empty strong{display:block;font-family:Schibsted Grotesk,sans-serif;font-size:17px;
   color:var(--ink);margin-bottom:7px}
 
 .more{display:flex;justify-content:center;padding:16px}
@@ -230,10 +235,10 @@ tr[data-prio="high"] .scorepill span i{background:var(--green-ink)}
 .morebtn:hover{border-color:var(--blue);color:var(--blue-ink)}
 
 /* ---- detail drawer ---- */
-.scrim{position:fixed;inset:0;background:rgba(6,16,28,.5);z-index:50;border:0}
+.scrim{position:fixed;inset:0;background:rgba(7,17,12,.5);z-index:50;border:0}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);
   background:var(--card);border-left:1px solid var(--rule);z-index:51;
-  overflow-y:auto;box-shadow:-16px 0 44px rgba(6,16,28,.28)}
+  overflow-y:auto;box-shadow:-16px 0 44px rgba(7,17,12,.28)}
 .d-head{position:sticky;top:0;background:var(--card);
   border-bottom:1px solid var(--rule);padding:18px 22px;z-index:2}
 .d-close{position:absolute;top:14px;right:16px;background:none;border:0;
@@ -294,7 +299,7 @@ tr[data-prio="high"] .scorepill span i{background:var(--green-ink)}
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
          '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
          '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
-         'family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600&'
+         'family=Schibsted+Grotesk:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&'
          'family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">')
 
 
@@ -508,7 +513,7 @@ window.initDashboard = function(ROWS, META){
         '<div style="margin-top:12px"><div style="display:flex;justify-content:space-between;' +
           'align-items:baseline"><span style="font-size:10.5px;letter-spacing:.11em;' +
           'text-transform:uppercase;color:var(--grey-2)">Opportunity score</span>' +
-          '<b style="font-family:Archivo,sans-serif;font-size:19px">' + r[F.score] + '/100</b></div>' +
+          '<b style="font-family:Schibsted Grotesk,sans-serif;font-size:19px">' + r[F.score] + '/100</b></div>' +
           '<div class="meter"><i style="width:' + r[F.score] + '%"></i></div></div>' +
       '</div>' +
       '<div class="d-body">' +
@@ -647,7 +652,7 @@ def build(data_url: str | None = None) -> tuple[str, dict | None]:
 
     body = f"""
 <div class="top"><div class="top-in">
-  <span class="logo">Tradie<span class="sig">signal</span></span>
+  %%LOGO%%
   <span class="top-tag">Opportunity dashboard</span>
   <span class="top-right"><i></i><span id="freshness">Live data</span></span>
 </div></div>
@@ -786,7 +791,7 @@ def main() -> None:
 
     OUT.mkdir(parents=True, exist_ok=True)
     page, data_file = build(args.data_url)
-    (OUT / "dashboard.html").write_text(page, encoding="utf-8")
+    (OUT / "dashboard.html").write_text(apply_logo(page), encoding="utf-8")
     print(f"wrote site/dashboard.html ({len(page):,} bytes)")
 
     if data_file is not None:

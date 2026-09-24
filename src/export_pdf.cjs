@@ -68,7 +68,7 @@ async function launchAny() {
 
     const foot = `
       <div style="width:100%;box-sizing:border-box;font-family:monospace;font-size:7.5pt;
-        line-height:1;color:#5A6B82;padding:0 13mm;">
+        line-height:1;color:#56675E;padding:0 13mm;">
         <span style="float:left">Tradiesignal &middot; Hunter Electrical Opportunity Report</span>
         <span style="float:right">Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
       </div>`;
